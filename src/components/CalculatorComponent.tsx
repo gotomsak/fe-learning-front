@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
 
-const CalculatorComponent:React.FC=()=>{
+const CalculatorComponent:React.FC<{calculatorResult:any}>=({calculatorResult})=>{
     const [result, setResult] = useState("")
     const edit = (elem:any) =>{
-        console.log(elem.value)
         setResult(result + elem.value)
     }
 
     const calc = () =>{
-        setResult(result + "=" + new Function("return " + result)())
-        console.log(result)
+        const FunctionReturn = new Function("return " + result)()
+        setResult(result + "=" + FunctionReturn)
+        calculatorResult(FunctionReturn)
     }
 
     const clear = () => {
         setResult("")
     }
     return (
-        <div>
+        <div className="Calculator">
             <input type="text" value={result}/>
             <div>
                 <input type="button" value="1" onClick={e=>edit(e.target)}/>

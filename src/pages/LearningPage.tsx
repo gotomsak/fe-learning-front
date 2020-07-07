@@ -6,12 +6,13 @@ import QuestionComponent from "../components/QuestionComponent"
 import { getQuestionInfo } from "../apis/getQuestionInfo"
 import TitleComponent from "../components/TitleComponent"
 import CalculatorComponent from "../components/CalculatorComponent"
+import LogComponent from "../components/LogComponent"
 
 function LearningPage() {
     // const [qInfo, setQInfo] = useState("");
     const [questionText, setQuestionText] = useState("")
     const [questionTitle, setQuestionTitle] = useState("")
-    
+    const [calculatorResult, setCalculatorResult] = useState("")
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer)
     let result:any
@@ -48,7 +49,9 @@ function LearningPage() {
         <div>
             <TitleComponent title={questionTitle}></TitleComponent>
             <QuestionComponent questionText={questionText}></QuestionComponent>
-            <CalculatorComponent></CalculatorComponent>
+            <CalculatorComponent calculatorResult={setCalculatorResult}></CalculatorComponent>
+            <LogComponent></LogComponent>
+            
             <button>test</button>
             {windowNonFocusTimer}
         </div>
