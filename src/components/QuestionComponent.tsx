@@ -2,11 +2,11 @@ import React from 'react'
 import DialogContentText from "@material-ui/core/DialogContentText"
 import './QuestionComponent.css'
 
-const QuestionComponent:React.FC<{questionString:string}>=({questionString})=>{
+const QuestionComponent:React.FC<{questionText:string}>=({questionText})=>{
     return (
         <div className="QuestionContainer">
             <div className="QuestionText">
-                {questionString}
+                {questionText}
             </div>
         </div>
     )

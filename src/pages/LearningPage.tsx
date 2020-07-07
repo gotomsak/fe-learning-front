@@ -31,7 +31,7 @@ function LearningPage() {
             setQInfo(result.data.question)
             console.log (result.data.question)
             console.log(qInfo)
-            
+
         }
 
         questionFetch()
@@ -42,7 +42,7 @@ function LearningPage() {
         <div>
             <h1>LearningPage</h1>
             {windowNonFocusTimer}
-            <QuestionComponent questionString={qInfo}></QuestionComponent>
+            <QuestionComponent questionText={qInfo}></QuestionComponent>
             {/* {qInfo} */}
                 { /* <questionComponent questionString={"nyan"}></questionComponent> */}
                 {/* <DialogContentText>{this.state.question}</DialogContentText> */}
