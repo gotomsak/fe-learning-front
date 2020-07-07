@@ -4,7 +4,6 @@ import './App.css';
 import TestContainer from '../src/containers/testContainer'
 import { Switch, Route } from 'react-router';
 import LearningPage from './pages/LearningPage'
-import AppStyles from './App'
 // class App extends React.Component {
 //   render() {
 //     return (

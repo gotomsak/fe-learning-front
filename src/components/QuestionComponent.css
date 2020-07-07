@@ -1,3 +1,7 @@
 .QuestionContainer{
-    width: 70%;
+    justify-content: center;
+}
+.QuestionText{
+    text-align: left;
+    
 }
