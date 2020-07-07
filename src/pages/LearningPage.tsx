@@ -5,6 +5,7 @@ import store from "../index"
 import QuestionComponent from "../components/QuestionComponent"
 import { getQuestionInfo } from "../apis/getQuestionInfo"
 import TitleComponent from "../components/TitleComponent"
+import CalculatorComponent from "../components/CalculatorComponent"
 
 function LearningPage() {
     // const [qInfo, setQInfo] = useState("");
@@ -47,6 +48,7 @@ function LearningPage() {
         <div>
             <TitleComponent title={questionTitle}></TitleComponent>
             <QuestionComponent questionText={questionText}></QuestionComponent>
+            <CalculatorComponent></CalculatorComponent>
             <button>test</button>
             {windowNonFocusTimer}
         </div>
