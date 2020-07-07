@@ -2,9 +2,9 @@ import React from 'react'
 import DialogContentText from "@material-ui/core/DialogContentText"
 
 
-const questionComponent:React.FunctionComponent<{questionString:string}>=({questionString})=>{
+const QuestionComponent:React.FC<{questionString:string}>=({questionString})=>{
     return (
-        <div>
+        <div className="QuestionContainer">
             <DialogContentText>
                 {questionString}
             </DialogContentText>
@@ -12,4 +12,4 @@ const questionComponent:React.FunctionComponent<{questionString:string}>=({quest
     )
 }
 
-export default questionComponent
+export default QuestionComponent

@@ -4,23 +4,33 @@ import './App.css';
 import TestContainer from '../src/containers/testContainer'
 import { Switch, Route } from 'react-router';
 import LearningPage from './pages/LearningPage'
+import AppStyles from './App'
 // class App extends React.Component {
 //   render() {
 //     return (
 //       <div className="App">
-//         <TestContainer />
+//         <React.Fragment>
+//           <Switch>
+//             <Route exact path="/" component={LearningPage} />
+//           </Switch>
+//         </React.Fragment>
 //       </div>
+//       // <div className="App">
+//       //   <TestContainer />
+//       // </div>
 //     );
 //   }
 // }
 
 const App=()=>{
   return (
-    <React.Fragment>
-      <Switch>
-        <Route exact path="/" component={LearningPage} />
-      </Switch>
-    </React.Fragment>
+    <div className="App">
+      <React.Fragment>
+        <Switch>
+          <Route exact path="/" component={LearningPage} />
+        </Switch>
+      </React.Fragment>
+    </div>
   )
 }
 
