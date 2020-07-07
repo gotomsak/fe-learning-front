@@ -4,9 +4,13 @@ import axios from "axios"
 import store from "../index"
 import QuestionComponent from "../components/QuestionComponent"
 import { getQuestionInfo } from "../apis/getQuestionInfo"
+import TitleComponent from "../components/TitleComponent"
 
 function LearningPage() {
-    const [qInfo, setQInfo] = useState("");
+    // const [qInfo, setQInfo] = useState("");
+    const [questionText, setQuestionText] = useState("")
+    const [questionTitle, setQuestionTitle] = useState("")
+    
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer)
     let result:any
@@ -28,26 +32,23 @@ function LearningPage() {
     useEffect(() => {
         const questionFetch = async()=>{
             result = await getQuestionInfo()
-            setQInfo(result.data.question)
+            // setQInfo(result.data)
+            setQuestionText(result.data.question)
+            setQuestionTitle(
+                result.data.season+" "+
+                result.data.question_num+" "+
+                result.data.genre)
             console.log (result.data.question)
-            console.log(qInfo)
-
         }
-
         questionFetch()
-        
     },[])
 
     return(
         <div>
-            <h1>LearningPage</h1>
-            {windowNonFocusTimer}
-            <QuestionComponent questionText={qInfo}></QuestionComponent>
-            {/* {qInfo} */}
-                { /* <questionComponent questionString={"nyan"}></questionComponent> */}
-                {/* <DialogContentText>{this.state.question}</DialogContentText> */}
-                {/* {this.state.windowNonFocusTimer} */}
+            <TitleComponent title={questionTitle}></TitleComponent>
+            <QuestionComponent questionText={questionText}></QuestionComponent>
             <button>test</button>
+            {windowNonFocusTimer}
         </div>
 
     )
