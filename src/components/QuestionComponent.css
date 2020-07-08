@@ -3,5 +3,9 @@
 }
 .QuestionText{
     text-align: left;
+}
+.QuestionImg{
     
+    display: flex;
+    justify-content: space-evenly;
 }

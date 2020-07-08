@@ -7,12 +7,15 @@ import { getQuestionInfo } from "../apis/getQuestionInfo"
 import TitleComponent from "../components/TitleComponent"
 import CalculatorComponent from "../components/CalculatorComponent"
 import LogComponent from "../components/LogComponent"
+import AnsChoiceComponent from "../components/AnsChoiceComponent"
 
 function LearningPage() {
     // const [qInfo, setQInfo] = useState("");
     const [questionText, setQuestionText] = useState("")
     const [questionImg, setQuestionImg] = useState([])
     const [questionTitle, setQuestionTitle] = useState("")
+    const [answerText, setAnswerText] = useState([])
+    const [answerImg, setAnswerImg] = useState([])
     const [calculatorResult, setCalculatorResult] = useState("")
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer)
@@ -41,8 +44,10 @@ function LearningPage() {
                 result.data.season+" "+
                 result.data.question_num+" "+
                 result.data.genre)
-            console.log (result.data.question)
-
+            setQuestionImg(result.data.qimg_path)
+            setAnswerText(result.data.ans_list)
+            setAnswerImg(result.data.aimg_list)
+            console.log (result.data.qimg_path)
         }
         questionFetch()
     },[])
@@ -50,10 +55,10 @@ function LearningPage() {
     return(
         <div>
             <TitleComponent title={questionTitle}></TitleComponent>
-            <QuestionComponent questionText={questionText} questionImg={null}></QuestionComponent>
+            <QuestionComponent questionText={questionText} questionImg={questionImg}></QuestionComponent>
             <CalculatorComponent calculatorResult={setCalculatorResult}></CalculatorComponent>
             <LogComponent calculatorResult={calculatorResult}></LogComponent>
-            
+            <AnsChoiceComponent answerText={answerText} answerImg={answerImg}></AnsChoiceComponent>
             <button>test</button>
             {windowNonFocusTimer}
         </div>
