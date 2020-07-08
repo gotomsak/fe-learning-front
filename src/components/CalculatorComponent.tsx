@@ -9,7 +9,7 @@ const CalculatorComponent:React.FC<{calculatorResult:any}>=({calculatorResult})=
     const calc = () =>{
         const FunctionReturn = new Function("return " + result)()
         setResult(result + "=" + FunctionReturn)
-        calculatorResult(FunctionReturn)
+        calculatorResult(result + "=" + FunctionReturn)
     }
 
     const clear = () => {

@@ -11,6 +11,7 @@ import LogComponent from "../components/LogComponent"
 function LearningPage() {
     // const [qInfo, setQInfo] = useState("");
     const [questionText, setQuestionText] = useState("")
+    const [questionImg, setQuestionImg] = useState([])
     const [questionTitle, setQuestionTitle] = useState("")
     const [calculatorResult, setCalculatorResult] = useState("")
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
@@ -41,6 +42,7 @@ function LearningPage() {
                 result.data.question_num+" "+
                 result.data.genre)
             console.log (result.data.question)
+
         }
         questionFetch()
     },[])
@@ -48,9 +50,9 @@ function LearningPage() {
     return(
         <div>
             <TitleComponent title={questionTitle}></TitleComponent>
-            <QuestionComponent questionText={questionText}></QuestionComponent>
+            <QuestionComponent questionText={questionText} questionImg={null}></QuestionComponent>
             <CalculatorComponent calculatorResult={setCalculatorResult}></CalculatorComponent>
-            <LogComponent></LogComponent>
+            <LogComponent calculatorResult={calculatorResult}></LogComponent>
             
             <button>test</button>
             {windowNonFocusTimer}
