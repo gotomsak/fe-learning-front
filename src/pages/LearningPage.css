@@ -1,0 +1,4 @@
+.LogContainer{
+    display: flex;
+    justify-content: space-evenly;
+}

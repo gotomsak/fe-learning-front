@@ -8,6 +8,7 @@ import TitleComponent from "../components/TitleComponent"
 import CalculatorComponent from "../components/CalculatorComponent"
 import LogComponent from "../components/LogComponent"
 import AnsChoiceComponent from "../components/AnsChoiceComponent"
+import './LearningPage.css'
 
 function LearningPage() {
     // const [qInfo, setQInfo] = useState("");
@@ -56,8 +57,10 @@ function LearningPage() {
         <div>
             <TitleComponent title={questionTitle}></TitleComponent>
             <QuestionComponent questionText={questionText} questionImg={questionImg}></QuestionComponent>
-            <CalculatorComponent calculatorResult={setCalculatorResult}></CalculatorComponent>
-            <LogComponent calculatorResult={calculatorResult}></LogComponent>
+            <div className="LogContainer">
+                <LogComponent calculatorResult={calculatorResult}></LogComponent>
+                <CalculatorComponent calculatorResult={setCalculatorResult}></CalculatorComponent>
+            </div>
             <AnsChoiceComponent answerText={answerText} answerImg={answerImg}></AnsChoiceComponent>
             <button>test</button>
             {windowNonFocusTimer}
