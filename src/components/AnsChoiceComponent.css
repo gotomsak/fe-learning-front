@@ -1,0 +1,15 @@
+.AnsList{
+    display: flex;
+    justify-content: space-between;
+    border: solid;
+    width: 100px;
+}
+.AnsList button{
+    height: 100%;
+    width: 50px;
+    font-size: large;
+}
+.AnsChoiceContainer{
+    display: flex;
+    justify-content: center;
+}

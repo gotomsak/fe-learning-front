@@ -1,21 +1,34 @@
 import React from 'react'
+import './AnsChoiceComponent.css'
 
 const AnsChoiceComponent:React.FC<{answerText:string[],answerImg:string[]}>=({answerText, answerImg})=>{
 
-    let index:any = 0
-    const choiceTag: string[] = ["A","B","C","D"]
+    const choiceTextList= [
+        {tag:"A",ansText: answerText[0]},
+        {tag:"B",ansText: answerText[1]},
+        {tag:"C",ansText: answerText[2]},
+        {tag:"D",ansText: answerText[3]}
+    ]
+    const choiceImgList= [
+        {tag:"A",ansImg: answerImg[0]},
+        {tag:"B",ansImg: answerImg[1]},
+        {tag:"C",ansImg: answerImg[2]},
+        {tag:"D",ansImg: answerImg[3]}
+    ]
     const choiceResult:any = (e:any) =>{
         console.log("osita")
     }
+
     if (answerText[0]==""){
         return(
             <div className="AnsChoiceContainer">
-                {answerImg?.map(i=>{
+                {choiceImgList?.map(i=>{
                     return (
                         <div className="AnsList">
-                            <button onClick ={choiceResult} value={i}>{choiceTag[index]}</button>
-                            <img src={i}/>
-                            {index=index+1}
+                            
+                            <button onClick={choiceResult} value={i.ansImg}>{i.tag}</button>
+                            <img src={i.ansImg}/>
+                            
                         </div>
                     )
                 })}
@@ -24,12 +37,11 @@ const AnsChoiceComponent:React.FC<{answerText:string[],answerImg:string[]}>=({an
     }else{
         return(
             <div className="AnsChoiceContainer">
-                {answerText?.map(d=>{
+                {choiceTextList?.map(d=>{
                     return (
                         <div className="AnsList">
-                            <button onClick ={choiceResult} value={d}>{choiceTag[index]}</button>
-                            <h1>{d}</h1>
-                            {index=index+1}
+                            <button onClick ={choiceResult} value={d.ansText}>{d.tag}</button>
+                            <h1>{d.ansText}</h1>
                         </div>
                     )
                 })}
