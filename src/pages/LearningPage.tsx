@@ -54,7 +54,7 @@ function LearningPage() {
     },[])
 
     return(
-        <div>
+        <div className="LearningPageContainer">
             <TitleComponent title={questionTitle}></TitleComponent>
             <QuestionComponent questionText={questionText} questionImg={questionImg}></QuestionComponent>
             <div className="LogContainer">
@@ -62,8 +62,7 @@ function LearningPage() {
                 <CalculatorComponent calculatorResult={setCalculatorResult}></CalculatorComponent>
             </div>
             <AnsChoiceComponent answerText={answerText} answerImg={answerImg}></AnsChoiceComponent>
-            <button>test</button>
-            {windowNonFocusTimer}
+            
         </div>
 
     )

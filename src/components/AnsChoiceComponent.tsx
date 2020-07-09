@@ -40,8 +40,10 @@ const AnsChoiceComponent:React.FC<{answerText:string[],answerImg:string[]}>=({an
                 {choiceTextList?.map(d=>{
                     return (
                         <div className="AnsList">
-                            <button onClick ={choiceResult} value={d.ansText}>{d.tag}</button>
-                            <h1>{d.ansText}</h1>
+                            <div className="AnsLine">
+                                <button onClick ={choiceResult} value={d.ansText}>{d.tag}</button>
+                                <h1>{d.ansText}</h1>
+                            </div>
                         </div>
                     )
                 })}
