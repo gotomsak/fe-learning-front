@@ -2,7 +2,8 @@
     display: flex;
     justify-content: space-between;
     border: solid;
-    width: auto;    
+    width: auto;
+    margin:40px;
 }
 .AnsLine{
 
