@@ -9,6 +9,12 @@ import CalculatorComponent from "../components/CalculatorComponent"
 import LogComponent from "../components/LogComponent"
 import AnsChoiceComponent from "../components/AnsChoiceComponent"
 import './LearningPage.css'
+import { 
+    webCameraInit,
+    webCameraStart,
+    webCameraStop,
+    webCameraDownload
+} from '../apis/webCameraAPI'
 
 function LearningPage() {
     // const [qInfo, setQInfo] = useState("");
@@ -27,6 +33,8 @@ function LearningPage() {
     },[windowNonFocusTimer])
     useEffect(()=>{
         let windowNonFocusTimerFlag:any;
+        webCameraInit()
+        
         window.addEventListener('focus',()=>{
             clearInterval(windowNonFocusTimerFlag)
         })
@@ -58,8 +66,28 @@ function LearningPage() {
         questionFetch()
     },[])
 
+    const stopButton=()=>{
+        webCameraStop()
+    }
+    const downloadURL=()=>{
+        const url = webCameraDownload()
+        let a = document.createElement('a')
+        document.body.appendChild(a)
+        a.href = url;
+        a.download = 'test.webm'
+        a.click()
+        window.URL.revokeObjectURL(url)
+    }
+
+    const startButton=()=>{
+        webCameraStart()
+    }
+
     return(
         <div className="LearningPageContainer">
+            <button onClick={startButton}>start</button>
+            <button onClick={stopButton}>stop</button>
+            <button onClick={downloadURL}>download</button>
             <TitleComponent title={questionTitle}></TitleComponent>
             <QuestionComponent questionText={questionText} questionImg={questionImg}></QuestionComponent>
             <div className="LogContainer">
