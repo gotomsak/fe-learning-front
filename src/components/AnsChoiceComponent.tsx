@@ -1,7 +1,7 @@
 import React from 'react'
 import './AnsChoiceComponent.css'
 
-const AnsChoiceComponent:React.FC<{answerText:string[],answerImg:string[]}>=({answerText, answerImg})=>{
+const AnsChoiceComponent:React.FC<{answerText:string[],answerImg:string[], answerFinal:any}>=({answerText, answerImg,answerFinal})=>{
 
     const choiceTextList= [
         {tag:"A",ansText: answerText[0]},
@@ -16,7 +16,8 @@ const AnsChoiceComponent:React.FC<{answerText:string[],answerImg:string[]}>=({an
         {tag:"D",ansImg: answerImg[3]}
     ]
     const choiceResult:any = (e:any) =>{
-        console.log("osita")
+        answerFinal(String(e.target.value))
+        console.log(e.target.value)
     }
 
     if (answerText[0]==""){

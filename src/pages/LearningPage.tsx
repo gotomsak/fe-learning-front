@@ -17,6 +17,7 @@ function LearningPage() {
     const [questionTitle, setQuestionTitle] = useState("")
     const [answerText, setAnswerText] = useState([])
     const [answerImg, setAnswerImg] = useState([])
+    const [answerFinal, setAnswerFinal]=useState("")
     const [calculatorResult, setCalculatorResult] = useState("")
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer)
@@ -35,6 +36,10 @@ function LearningPage() {
             }, 1000);
         })
     },[])
+    useEffect(()=>{
+        console.log("かわた")
+        
+    },[answerFinal])
 
     useEffect(() => {
         const questionFetch = async()=>{
@@ -61,7 +66,7 @@ function LearningPage() {
                 <LogComponent calculatorResult={calculatorResult}></LogComponent>
                 <CalculatorComponent calculatorResult={setCalculatorResult}></CalculatorComponent>
             </div>
-            <AnsChoiceComponent answerText={answerText} answerImg={answerImg}></AnsChoiceComponent>
+            <AnsChoiceComponent answerText={answerText} answerImg={answerImg} answerFinal={setAnswerFinal}></AnsChoiceComponent>
             
         </div>
 
