@@ -7,7 +7,7 @@ axios.defaults.headers.post['Access-Control-Allow-Origin']='*';
 axios.defaults.headers.get['Access-Control-Allow-Origin']='*';
 
 export async function getQuestionInfo(){
-    let result:any = await axios.get("/test")
+    let result:any = await axios.get("/question")
     console.log(result)
     return result
 }

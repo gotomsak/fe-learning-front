@@ -3,6 +3,8 @@ let recorder: MediaRecorder
 
 let recordedChunks:any = []
 
+// let exampleSocket = new WebSocket('ws://localhost:1323')
+// RTCPeerConnection()
 export function webCameraInit(){
     const constrains = {video: true, audio: true}
     navigator.mediaDevices.getUserMedia(constrains)
