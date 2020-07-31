@@ -9,6 +9,7 @@ import CalculatorComponent from "../components/CalculatorComponent"
 import LogComponent from "../components/LogComponent"
 import AnsChoiceComponent from "../components/AnsChoiceComponent"
 import './LearningPage.css'
+import AnsResultComponent from'../components/AnsResultComponent'
 import { 
     webCameraInit,
     webCameraStart,
@@ -26,6 +27,7 @@ function LearningPage() {
     const [answerFinal, setAnswerFinal]=useState("")
     const [calculatorResult, setCalculatorResult] = useState("")
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
+    const [answerResult, setAnswerResult] = useState("")
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer)
     let result:any
     useEffect(()=>{
@@ -82,12 +84,16 @@ function LearningPage() {
     const startButton=()=>{
         webCameraStart()
     }
+    const ansResult=()=>{
+        setAnswerResult("ositta")
+    }
 
     return(
         <div className="LearningPageContainer">
             <button onClick={startButton}>start</button>
             <button onClick={stopButton}>stop</button>
             <button onClick={downloadURL}>download</button>
+            <button onClick={ansResult}>Test</button>
             <TitleComponent title={questionTitle}></TitleComponent>
             <QuestionComponent questionText={questionText} questionImg={questionImg}></QuestionComponent>
             <div className="LogContainer">
@@ -95,7 +101,7 @@ function LearningPage() {
                 <CalculatorComponent calculatorResult={setCalculatorResult}></CalculatorComponent>
             </div>
             <AnsChoiceComponent answerText={answerText} answerImg={answerImg} answerFinal={setAnswerFinal}></AnsChoiceComponent>
-            
+            <AnsResultComponent ansResult={answerResult}></AnsResultComponent>
         </div>
 
     )
