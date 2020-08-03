@@ -16,8 +16,9 @@ function TopPage(){
     return (
         <div className="TopPageContainer">
             <h1>fe-learing</h1>
-
-            <TopMenuBtnComponent btnText="signup"></TopMenuBtnComponent>
+            <TopMenuBtnComponent btnText="leaning" path="/leaning"></TopMenuBtnComponent>
+            <TopMenuBtnComponent btnText="signout" path="/signout"></TopMenuBtnComponent>
+            <TopMenuBtnComponent btnText="signup" path="/signup"></TopMenuBtnComponent>
         </div>
     )
 }

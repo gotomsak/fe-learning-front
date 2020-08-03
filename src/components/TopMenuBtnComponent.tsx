@@ -1,12 +1,12 @@
 import React from 'react'
 
 
-const TopMenuBtnComponent: React.FC<{btnText:string}>=({btnText})=>{
+const TopMenuBtnComponent: React.FC<{btnText:string, path:string}>=({btnText,path})=>{
 
     return(
         <div className="TopMenuBtnContainer">
             
-            <a href='/signin'>
+            <a href={path}>
             <button>
                 {btnText}
                 
