@@ -43,7 +43,7 @@ const AnsChoiceComponent:React.FC<{answerText:string[],answerImg:string[], answe
                         <div className="AnsList">
                             <div className="AnsLine">
                                 <button onClick ={choiceResult} value={d.ansText}>{d.tag}</button>
-                                <h1>{d.ansText}</h1>
+                                <h4>{d.ansText}</h4>
                             </div>
                         </div>
                     )

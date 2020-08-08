@@ -1,4 +1,5 @@
 import React,{ useState, useRef, useEffect } from 'react'
+import './LogComponent.css'
 
 const LogComponent: React.FC<{calculatorResult:string}> =({calculatorResult})=>{
     const [Log,setLog] = useState("")

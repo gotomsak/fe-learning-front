@@ -14,9 +14,9 @@ const App=()=>{
       <React.Fragment>
         <Switch>
           <Route exact path="/" component={TopPage}/>
-          <Route path="/learing" component={LearningPage} />
+          <Route path="/learning" component={LearningPage} />
           <Route path="/signup" component={SignupPage} />
-          <Route path="/signin" component={SigninPage}></Route>
+          <Route path="/signin" component={SigninPage}/>
         </Switch>
       </React.Fragment>
     </div>

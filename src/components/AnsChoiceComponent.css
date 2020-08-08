@@ -6,7 +6,7 @@
     margin: 30px;
 }
 .AnsLine{
-
+    display: flex;
     text-align: left;
 }
 .AnsList button{
@@ -15,7 +15,7 @@
     font-size: large;
 }
 .AnsChoiceContainer{
-    display: inline-block;
+    /* display: inline-block; */
     /* display: flex; */
     /* justify-content: center; */ 
 }

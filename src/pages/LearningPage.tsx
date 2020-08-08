@@ -1,42 +1,46 @@
-import React, { useState, useEffect, useRef } from "react"
-import DialogContentText from "@material-ui/core/DialogContentText"
-import axios from "axios"
-import store from "../index"
-import QuestionComponent from "../components/QuestionComponent"
-import { getQuestionInfo } from "../apis/getQuestionInfo"
-import TitleComponent from "../components/TitleComponent"
-import CalculatorComponent from "../components/CalculatorComponent"
-import LogComponent from "../components/LogComponent"
-import AnsChoiceComponent from "../components/AnsChoiceComponent"
+import React, { useState, useEffect, useRef, useReducer } from "react"
+
 import './LearningPage.css'
-import AnsResultComponent from'../components/AnsResultComponent'
+import {GetQuestionIdsPost} from '../apis/backendAPI/interfaces'
+
 import { 
     webCameraInit,
     webCameraStart,
     webCameraStop,
     webCameraDownload
 } from '../apis/webCameraAPI'
+import ReadyViewComponent from "../components/ReadyViewComponent"
+
+import QuestionViewComponent from "../components/QuestionViewComponent"
+import { getQuestionIds } from "../apis/backendAPI/getQuestionIds"
 
 function LearningPage() {
-    // const [qInfo, setQInfo] = useState("");
-    const [questionText, setQuestionText] = useState("")
-    const [questionImg, setQuestionImg] = useState([])
-    const [questionTitle, setQuestionTitle] = useState("")
-    const [answerText, setAnswerText] = useState([])
-    const [answerImg, setAnswerImg] = useState([])
-    const [answerFinal, setAnswerFinal]=useState("")
-    const [calculatorResult, setCalculatorResult] = useState("")
+    let getQuestionIdsPost:GetQuestionIdsPost
+    const idsReducer = (state:number[], action:any)=>{
+        console.log(state)
+        console.log(action)
+        if(action.type === 'remove'){
+            return state.filter((number:number)=> number !== action.number)
+        }else if (action.type==='add'){
+            return [...state, action.number]
+        } else {
+            throw `Invalid type: ${action.type}`;
+        }
+        
+    }
+    const [startCheck, setStart] = useState(false);
+
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
-    const [answerResult, setAnswerResult] = useState("")
+    const [solvedIDs, solveIDsDispatch] = useReducer(idsReducer,[])
+    const [questionIDs, questionIDsDispatch] = useReducer(idsReducer,[])
+    const [questionID, setQuestionID]= useState(0)
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer)
-    let result:any
+    
     useEffect(()=>{
         refWindowNonFocusTimer.current=windowNonFocusTimer
     },[windowNonFocusTimer])
     useEffect(()=>{
         let windowNonFocusTimerFlag:any;
-        webCameraInit()
-        
         window.addEventListener('focus',()=>{
             clearInterval(windowNonFocusTimerFlag)
         })
@@ -46,27 +50,24 @@ function LearningPage() {
             }, 1000);
         })
     },[])
+    
     useEffect(()=>{
-        console.log("かわた")
-        
-    },[answerFinal])
-
-    useEffect(() => {
-        const questionFetch = async()=>{
-            result = await getQuestionInfo()
-            // setQInfo(result.data)
-            setQuestionText(result.data.question)
-            setQuestionTitle(
-                result.data.season+" "+
-                result.data.question_num+" "+
-                result.data.genre)
-            setQuestionImg(result.data.qimg_path)
-            setAnswerText(result.data.ans_list)
-            setAnswerImg(result.data.aimg_list)
-            console.log (result.data.qimg_path)
+        if(startCheck==true){
+            console.log("startした")
+            getQuestionIdsPost = {solved_ids:solvedIDs,question_ids: questionIDs}
+            getQuestionIds(getQuestionIdsPost).then((res)=>{
+                for (let i in res.data["question_ids"]){
+                    questionIDsDispatch({type:'add',number: res.data["question_ids"][i]})
+                }
+                for (let i in res.data["solved_ids"]){
+                    solveIDsDispatch({type:'add', number: res.data["solved_ids"][i]})
+                }
+            })
         }
-        questionFetch()
-    },[])
+    },[startCheck])
+    useEffect(()=>{
+        setQuestionID(questionIDs[0])
+    },[questionIDs])
 
     const stopButton=()=>{
         webCameraStop()
@@ -81,27 +82,18 @@ function LearningPage() {
         window.URL.revokeObjectURL(url)
     }
 
-    const startButton=()=>{
+    const startQuestionInit=()=>{
         webCameraStart()
-    }
-    const ansResult=()=>{
-        setAnswerResult("ositta")
     }
 
     return(
         <div className="LearningPageContainer">
-            <button onClick={startButton}>start</button>
+            {startCheck ?
+                questionID > 0 && <QuestionViewComponent questionID={questionID}>{startQuestionInit}</QuestionViewComponent>
+                :<ReadyViewComponent setStart={setStart}></ReadyViewComponent>
+            }
             <button onClick={stopButton}>stop</button>
             <button onClick={downloadURL}>download</button>
-            <button onClick={ansResult}>Test</button>
-            <TitleComponent title={questionTitle}></TitleComponent>
-            <QuestionComponent questionText={questionText} questionImg={questionImg}></QuestionComponent>
-            <div className="LogContainer">
-                <LogComponent calculatorResult={calculatorResult}></LogComponent>
-                <CalculatorComponent calculatorResult={setCalculatorResult}></CalculatorComponent>
-            </div>
-            <AnsChoiceComponent answerText={answerText} answerImg={answerImg} answerFinal={setAnswerFinal}></AnsChoiceComponent>
-            <AnsResultComponent ansResult={answerResult}></AnsResultComponent>
         </div>
 
     )
