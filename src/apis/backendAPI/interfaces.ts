@@ -4,3 +4,8 @@ export interface User{
     email: string,
     password: string
 }
+
+export interface GetQuestionIdsPost{
+    solved_ids: number[],
+    question_ids: number[]
+}

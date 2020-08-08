@@ -1,10 +1,10 @@
 
 import axios from 'axios';
-import Cookies from 'js-cookie'
+
 //import {useHistory} from 'react-router'
 
-export * from "./userAuth"
 
+export * from "./userAuth"
 
 axios.defaults.baseURL = "http://127.0.0.1:1323"
 // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
