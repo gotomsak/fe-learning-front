@@ -13,29 +13,32 @@ import ReadyViewComponent from "../components/ReadyViewComponent"
 
 import QuestionViewComponent from "../components/QuestionViewComponent"
 import { getQuestionIds } from "../apis/backendAPI/getQuestionIds"
+import FinishViewComponent from "../components/FinishViewComponent"
 
 function LearningPage() {
     let getQuestionIdsPost:GetQuestionIdsPost
     const idsReducer = (state:number[], action:any)=>{
-        console.log(state)
-        console.log(action)
         if(action.type === 'remove'){
             return state.filter((number:number)=> number !== action.number)
         }else if (action.type==='add'){
             return [...state, action.number]
+        }else if (action.type === 'reset'){
+            return []
         } else {
             throw `Invalid type: ${action.type}`;
         }
         
     }
     const [startCheck, setStart] = useState(false);
-
+    const [answerResultIDs, setAnswerResultIDs] = useReducer(idsReducer,[])
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
     const [solvedIDs, solveIDsDispatch] = useReducer(idsReducer,[])
     const [questionIDs, questionIDsDispatch] = useReducer(idsReducer,[])
     const [questionID, setQuestionID]= useState(0)
+    const [next, setNext] = useState(false)
+    const [finish, setFinish]=useState(false)
+    const [qCount, setQCount]=useState(0)
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer)
-    
     useEffect(()=>{
         refWindowNonFocusTimer.current=windowNonFocusTimer
     },[windowNonFocusTimer])
@@ -52,6 +55,20 @@ function LearningPage() {
     },[])
     
     useEffect(()=>{
+        console.log(qCount)
+        if (qCount > 9){
+            setFinish(true)
+            setStart(false)
+        }
+        if (next == true && qCount <= 9){
+            const cnt = qCount + 1
+            setQuestionID(questionIDs[cnt])
+            setQCount(qCount+1)
+            setNext(false)
+        }
+    },[next])
+
+    useEffect(()=>{
         if(startCheck==true){
             console.log("startした")
             getQuestionIdsPost = {solved_ids:solvedIDs,question_ids: questionIDs}
@@ -65,6 +82,7 @@ function LearningPage() {
             })
         }
     },[startCheck])
+
     useEffect(()=>{
         setQuestionID(questionIDs[0])
     },[questionIDs])
@@ -86,14 +104,26 @@ function LearningPage() {
         webCameraStart()
     }
 
+    const reset=()=>{
+
+    }
+    const Hoge=()=>{
+        return <h1>hoge</h1>
+    }
+
     return(
         <div className="LearningPageContainer">
+            {/* <Hoge /> */}
             {startCheck ?
-                questionID > 0 && <QuestionViewComponent questionID={questionID}>{startQuestionInit}</QuestionViewComponent>
-                :<ReadyViewComponent setStart={setStart}></ReadyViewComponent>
+                questionID > 0 && 
+                    <QuestionViewComponent questionID={questionID} setNext={setNext} setAnswerResultIDs={setAnswerResultIDs}>
+                        {startQuestionInit}
+                    </QuestionViewComponent>
+                    :finish? <FinishViewComponent></FinishViewComponent>
+                : <ReadyViewComponent setStart={setStart}></ReadyViewComponent>
             }
-            <button onClick={stopButton}>stop</button>
-            <button onClick={downloadURL}>download</button>
+            {/* <button onClick={stopButton}>stop</button>
+            <button onClick={downloadURL}>download</button> */}
         </div>
 
     )
