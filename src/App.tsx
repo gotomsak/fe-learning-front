@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-// import TestContainer from '../src/containers/testContainer'
 import { Switch, Route } from 'react-router';
 import LearningPage from './pages/LearningPage'
 import SignupPage from './pages/SignupPage'

@@ -19,8 +19,6 @@ ReactDOM.render(
         <App />
       </ConnectedRouter>
     </Provider>
-    {/* <LearningPage /> */}
-    
   </React.StrictMode>,
   document.getElementById('root')
 );
