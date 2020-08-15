@@ -1,7 +1,7 @@
 import { Action } from 'typescript-fsa'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { AppState } from '../store'
+// import { AppState } from '../store'
 import { testActions } from '../actions/testActions'
 import { TestComponent } from '../components/testComponent'
 
@@ -17,8 +17,8 @@ function mapDispatchToProps(dispatch: Dispatch<Action<string>>){
     }
 }
 
-function mapStateToProps(appState: AppState){
-    return Object.assign({}, appState.test);
-}
+// function mapStateToProps(appState: AppState){
+//     return Object.assign({}, appState.test);
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TestComponent)
+// export default connect(mapStateToProps, mapDispatchToProps)(TestComponent)
