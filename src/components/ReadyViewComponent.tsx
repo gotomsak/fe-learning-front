@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
-const ReadyViewComponent: React.FC<{setStartCheck:any}>=({setStartCheck})=>{
-    const buttonClick =()=>{
-        setStartCheck(true)
-    }
+const ReadyViewComponent: React.FC<{ setStartCheck: any }> = ({
+    setStartCheck,
+}) => {
+    const buttonClick = () => {
+        setStartCheck(true);
+    };
     return (
         <div>
             <h1>準備は良いですか？</h1>
@@ -12,7 +14,7 @@ const ReadyViewComponent: React.FC<{setStartCheck:any}>=({setStartCheck})=>{
             <h3>終了後アンケートにお応えください</h3>
             <button onClick={buttonClick}>start</button>
         </div>
-    )
-}
+    );
+};
 
-export default ReadyViewComponent
+export default ReadyViewComponent;

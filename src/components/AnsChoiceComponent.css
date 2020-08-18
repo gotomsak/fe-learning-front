@@ -1,21 +1,21 @@
-.AnsList{
+.AnsList {
     display: flex;
     justify-content: space-between;
     border: solid;
     width: auto;
     margin: 30px;
 }
-.AnsLine{
+.AnsLine {
     display: flex;
     text-align: left;
 }
-.AnsList button{
+.AnsList button {
     height: 100%;
     width: 50px;
     font-size: large;
 }
-.AnsChoiceContainer{
+.AnsChoiceContainer {
     /* display: inline-block; */
     /* display: flex; */
-    /* justify-content: center; */ 
+    /* justify-content: center; */
 }

@@ -1,7 +1,6 @@
-.LogsContainer{
+.LogsContainer {
     display: flex;
     justify-content: space-evenly;
 }
-.QuestionViewContainer{
-    
+.QuestionViewContainer {
 }

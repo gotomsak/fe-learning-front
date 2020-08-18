@@ -1,11 +1,10 @@
-.QuestionContainer{
+.QuestionContainer {
     justify-content: center;
 }
-.QuestionText{
+.QuestionText {
     text-align: left;
 }
-.QuestionImg{
-    
+.QuestionImg {
     display: flex;
     justify-content: space-evenly;
 }
