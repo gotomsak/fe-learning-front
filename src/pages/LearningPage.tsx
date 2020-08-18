@@ -29,7 +29,7 @@ function LearningPage() {
         }
         
     }
-    const [startCheck, setStart] = useState(false);
+    const [startCheck, setStartCheck] = useState(false);
     const [answerResultIDs, setAnswerResultIDs] = useReducer(idsReducer,[])
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
     const [solvedIDs, solveIDsDispatch] = useReducer(idsReducer,[])
