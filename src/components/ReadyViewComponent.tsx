@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
-const ReadyViewComponent: React.FC<{setStart:any}>=({setStart})=>{
+const ReadyViewComponent: React.FC<{setStartCheck:any}>=({setStartCheck})=>{
     const buttonClick =()=>{
-        setStart(true)
+        setStartCheck(true)
     }
     return (
         <div>
