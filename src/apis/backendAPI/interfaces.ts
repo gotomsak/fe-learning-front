@@ -19,3 +19,13 @@ export interface CheckAnswerPost{
     start_time: string,
     end_time: string
 }
+
+export interface CheckAnswerSectionPost{
+    user_id: number,
+    answer_result_ids: number[],
+    correct_answer_number: number,
+    other_focus_second: number,
+    face_video: Blob,
+    start_time: string,
+    end_time: string
+}
