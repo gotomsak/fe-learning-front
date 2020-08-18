@@ -8,8 +8,15 @@ import AnsResultComponent from './AnsResultComponent'
 import { getQuestion } from '../apis/backendAPI/getQuestion'
 import { webCameraInit } from '../apis/webCameraAPI'
 import './QuestionViewComponent.css'
+import { checkAnswer } from '../apis/backendAPI/checkAnswer'
+import { CheckAnswerPost } from '../apis/backendAPI/interfaces'
+import { getNowTimeString } from '../utils/utils'
+import store from '..'
+import { correctNumberState } from '../states/correctNumberState'
 
-const QuestionViewComponent: React.FC<{questionID:number}> = ({questionID}) =>{
+
+const QuestionViewComponent: React.FC<{questionID:number, setNext:any, setAnswerResultIDs: any, setCorrectAnswerNumber:any}>
+                                                    = ({questionID, setNext, setAnswerResultIDs, setCorrectAnswerNumber}) =>{
     const [questionText, setQuestionText] = useState("")
     const [questionImg, setQuestionImg] = useState([])
     const [questionTitle, setQuestionTitle] = useState("")
@@ -18,28 +25,41 @@ const QuestionViewComponent: React.FC<{questionID:number}> = ({questionID}) =>{
     const [calculatorResult, setCalculatorResult] = useState("")
     const [answerResult, setAnswerResult] = useState("")
     const [answerFinal, setAnswerFinal]=useState("")
-
-    const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
-    
+    const [startTime, setStartTime] = useState("")
+    const [windowNonFocusTimer, setNonFocusTimer] = useState(0)
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer)
-    let result:any
 
-    const ansResult=()=>{
-        setAnswerResult("ositta")
-    }
     useEffect(()=>{
-        console.log("かわた")
-        
+        if(answerFinal != ""){
+            checkAnswer(setResult())
+                .then((res)=>{
+                    console.log(res.data)
+                    if (res.data["result"]=="correct"){
+                        // setCorrectAnswerNumber()
+                        store.dispatch({type:"correct"})
+                        
+                    }
+                    console.log(store.getState())
+                    store.dispatch({type:"reset_correct"})
+                    console.log(store.getState())
+                    setAnswerResult(res.data["answer"])
+                    setAnswerResultIDs({type:'add',number: res.data["answer_result_id"]})
+                    store.dispatch({type:'ansResultIDSet', id: res.data["answer_result_id"]})
+                })
+        }
     },[answerFinal])
+
     useEffect(() => {
-        
         questionFetch(questionID)
     },[questionID])
+
     useEffect(()=>{
         refWindowNonFocusTimer.current=windowNonFocusTimer
     },[windowNonFocusTimer])
+
     useEffect(()=>{
         let windowNonFocusTimerFlag:any;
+
         webCameraInit()
         window.addEventListener('focus',()=>{
             clearInterval(windowNonFocusTimerFlag)
@@ -50,7 +70,9 @@ const QuestionViewComponent: React.FC<{questionID:number}> = ({questionID}) =>{
             }, 1000);
         })
     },[])
-    const questionFetch = (qid: number)=>{
+
+    const questionFetch = (qid: number) => {
+        setStartTime(getNowTimeString())
         getQuestion(qid)
             .then((res)=>{
                 setQuestionText(res.data.question)
@@ -62,7 +84,23 @@ const QuestionViewComponent: React.FC<{questionID:number}> = ({questionID}) =>{
                 setAnswerText(res.data.ans_list)
                 setAnswerImg(res.data.aimg_list)
             })
-        // setQInfo(result.data)
+    }
+
+    const setResult = ():CheckAnswerPost => {
+        const end = getNowTimeString()
+        return  {
+            question_id:  questionID,
+            user_id : Number(localStorage.getItem("user_id")),
+            memo_log : calculatorResult,
+            other_focus_second : windowNonFocusTimer,
+            user_answer : answerFinal,
+            start_time : startTime,
+            end_time : end,
+        }
+    }
+    const reset=()=>{
+        setAnswerResult("")
+        setNext(true)
     }
 
     return (
@@ -74,10 +112,14 @@ const QuestionViewComponent: React.FC<{questionID:number}> = ({questionID}) =>{
                 <CalculatorComponent calculatorResult={setCalculatorResult}></CalculatorComponent>
             </div>
             <AnsChoiceComponent answerText={answerText} answerImg={answerImg} answerFinal={setAnswerFinal}></AnsChoiceComponent>
-            <AnsResultComponent ansResult={answerResult}></AnsResultComponent>
-            <button onClick={ansResult}>Test</button>
+            {
+                answerResult !=""&&
+                <div>
+                    <AnsResultComponent ansResult={answerResult}></AnsResultComponent>
+                    <button onClick={reset}>next</button>
+                </div>
+            }
         </div>
-        
     )
 }
 

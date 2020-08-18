@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useReducer } from "react"
 
 import './LearningPage.css'
-import {GetQuestionIdsPost} from '../apis/backendAPI/interfaces'
+import {GetQuestionIdsPost, CheckAnswerSectionPost} from '../apis/backendAPI/interfaces'
 
 import { 
     webCameraInit,
@@ -10,13 +10,17 @@ import {
     webCameraDownload
 } from '../apis/webCameraAPI'
 import ReadyViewComponent from "../components/ReadyViewComponent"
-
+import { useHistory } from 'react-router'
 import QuestionViewComponent from "../components/QuestionViewComponent"
 import { getQuestionIds } from "../apis/backendAPI/getQuestionIds"
 import FinishViewComponent from "../components/FinishViewComponent"
+import { checkAnswerSection } from "../apis/backendAPI/checkAnswerSection"
+import store from ".."
+import { push } from 'connected-react-router'
 
 function LearningPage() {
     let getQuestionIdsPost:GetQuestionIdsPost
+    const history=useHistory()
     const idsReducer = (state:number[], action:any)=>{
         if(action.type === 'remove'){
             return state.filter((number:number)=> number !== action.number)
@@ -37,7 +41,9 @@ function LearningPage() {
     const [questionID, setQuestionID]= useState(0)
     const [next, setNext] = useState(false)
     const [finish, setFinish]=useState(false)
+    const [finishFlag, setFinishFlag]=useState(0)
     const [qCount, setQCount]=useState(0)
+    const [correctAnswerNumber, setCorrectAnswerNumber] = useState(0)
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer)
     useEffect(()=>{
         refWindowNonFocusTimer.current=windowNonFocusTimer
@@ -58,7 +64,7 @@ function LearningPage() {
         console.log(qCount)
         if (qCount > 9){
             setFinish(true)
-            setStart(false)
+            setStartCheck(false)
         }
         if (next == true && qCount <= 9){
             const cnt = qCount + 1
@@ -67,6 +73,21 @@ function LearningPage() {
             setNext(false)
         }
     },[next])
+
+    useEffect(()=>{
+        console.log(answerResultIDs)
+    },[answerResultIDs])
+
+    useEffect(()=>{
+        if(finishFlag == 1){
+            console.log("続ける")
+        }
+        if(finishFlag == 2){
+            console.log("owaru")
+            history.push('/')
+            
+        }
+    }, [finishFlag])
 
     useEffect(()=>{
         if(startCheck==true){
@@ -110,17 +131,24 @@ function LearningPage() {
     const Hoge=()=>{
         return <h1>hoge</h1>
     }
-
+    // const setSectionResult = ():CheckAnswerSectionPost =>{
+    //     return {
+    //         user_id: Number(localStorage.getItem("user_id")),
+    //         answer_result_ids: answerResultIDs,
+    //         correct_answer_number: 
+    //     }
+    // }
     return(
         <div className="LearningPageContainer">
             {/* <Hoge /> */}
             {startCheck ?
                 questionID > 0 && 
-                    <QuestionViewComponent questionID={questionID} setNext={setNext} setAnswerResultIDs={setAnswerResultIDs}>
+                    <QuestionViewComponent questionID={questionID} setNext={setNext}
+                            setAnswerResultIDs={setAnswerResultIDs} setCorrectAnswerNumber={setCorrectAnswerNumber}>
                         {startQuestionInit}
                     </QuestionViewComponent>
-                    :finish? <FinishViewComponent></FinishViewComponent>
-                : <ReadyViewComponent setStart={setStart}></ReadyViewComponent>
+                    :finish? <FinishViewComponent setFinishFlag={setFinishFlag}></FinishViewComponent>
+                : <ReadyViewComponent setStartCheck={setStartCheck}></ReadyViewComponent>
             }
             {/* <button onClick={stopButton}>stop</button>
             <button onClick={downloadURL}>download</button> */}
