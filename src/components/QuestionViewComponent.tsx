@@ -12,14 +12,14 @@ import { checkAnswer } from "../apis/backendAPI/checkAnswer";
 import { CheckAnswerPost } from "../apis/backendAPI/interfaces";
 import { getNowTimeString } from "../utils/utils";
 import store from "..";
+import { useSelector, useDispatch } from "react-redux";
 import { correctNumberState } from "../states/correctNumberState";
 
 const QuestionViewComponent: React.FC<{
     questionID: number;
     setNext: any;
-    setAnswerResultIDs: any;
-    setCorrectAnswerNumber: any;
-}> = ({ questionID, setNext, setAnswerResultIDs, setCorrectAnswerNumber }) => {
+}> = ({ questionID, setNext }) => {
+    const dispatch = useDispatch();
     const [questionText, setQuestionText] = useState("");
     const [questionImg, setQuestionImg] = useState([]);
     const [questionTitle, setQuestionTitle] = useState("");
@@ -37,18 +37,10 @@ const QuestionViewComponent: React.FC<{
             checkAnswer(setResult()).then((res) => {
                 console.log(res.data);
                 if (res.data["result"] == "correct") {
-                    // setCorrectAnswerNumber()
-                    store.dispatch({ type: "correct" });
+                    dispatch({ type: "correctNumberSet" });
                 }
-                console.log(store.getState());
-                store.dispatch({ type: "reset_correct" });
-                console.log(store.getState());
                 setAnswerResult(res.data["answer"]);
-                setAnswerResultIDs({
-                    type: "add",
-                    number: res.data["answer_result_id"],
-                });
-                store.dispatch({
+                dispatch({
                     type: "ansResultIDSet",
                     id: res.data["answer_result_id"],
                 });

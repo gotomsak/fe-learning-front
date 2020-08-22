@@ -6,14 +6,17 @@ import {
 import { routerMiddleware, connectRouter } from "connected-react-router";
 import { correctNumberState } from "./states/correctNumberState";
 import { ansResultIDsState } from "./states/ansResultIDsState";
-
-export default function createStore(histroy: any) {
+import { questionIDsState } from "./states/questionIDsState";
+import { solvedIDsState } from "./states/solvedIDsState";
+export default function createStore(histroy: any, initStates: any) {
     return reduxCreateStore(
         combineReducers({
             ansResultIDsState,
             correctNumberState,
+            questionIDsState,
+            solvedIDsState,
             router: connectRouter(histroy),
         }),
-        applyMiddleware(routerMiddleware(histroy))
+        (applyMiddleware(routerMiddleware(histroy)), initStates)
     );
 }

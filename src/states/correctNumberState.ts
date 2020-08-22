@@ -1,8 +1,8 @@
 export function correctNumberState(state: number = 0, action: any) {
     switch (action.type) {
-        case "correct":
+        case "correctNumberSet":
             return state + 1;
-        case "reset_correct":
+        case "correctNumberReset":
             return 0;
         default:
             return state;

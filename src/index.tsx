@@ -8,9 +8,10 @@ import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { createBrowserHistory } from "history";
 import createStore from "./store";
+import { initStates } from "./states/initStates";
 
 const history = createBrowserHistory();
-const store = createStore(history);
+const store = createStore(history, initStates);
 
 ReactDOM.render(
     <React.StrictMode>
