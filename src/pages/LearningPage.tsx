@@ -5,7 +5,6 @@ import React, {
     useReducer,
     useCallback,
 } from "react";
-import ReactDOM from "react-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import "./LearningPage.css";
@@ -63,7 +62,7 @@ function LearningPage() {
             setFinish(true);
             setStartCheck(false);
         }
-        if (next == true && qCount <= 9) {
+        if (next === true && qCount <= 9) {
             const cnt = qCount + 1;
             setQuestionID(store.getState().questionIDsState[cnt]);
             setQCount(qCount + 1);
@@ -72,17 +71,17 @@ function LearningPage() {
     }, [next]);
 
     useEffect(() => {
-        if (finishFlag == 1) {
+        if (finishFlag === 1) {
             console.log("続ける");
         }
-        if (finishFlag == 2) {
+        if (finishFlag === 2) {
             console.log("owaru");
             history.push("/");
         }
     }, [finishFlag]);
 
     useEffect(() => {
-        if (startCheck == true) {
+        if (startCheck === true) {
             console.log("startした");
             const getQuestionIdsPost: GetQuestionIdsPost = {
                 solved_ids: store.getState().solvedIDsState,

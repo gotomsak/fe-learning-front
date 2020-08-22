@@ -59,7 +59,7 @@ function SigninPage() {
             </label>
             <br />
             <input type="submit" value="submit" onClick={signinSubmit} />
-            {errorMessage != "" && (
+            {errorMessage !== "" && (
                 <ErrorViewComponent
                     errMessage={errorMessage}
                 ></ErrorViewComponent>

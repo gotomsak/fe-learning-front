@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { CheckAnswerPost } from "./interfaces";
 import { axios } from "./index";
 export const checkAnswer = (postData: CheckAnswerPost) => {

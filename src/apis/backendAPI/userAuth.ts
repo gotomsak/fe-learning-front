@@ -1,8 +1,5 @@
 import { User } from "./interfaces";
-import Cookies from "js-cookie";
 import { axios } from "./index";
-import { Typography } from "@material-ui/core";
-// import axios from 'axios';
 
 export const signup = (user: User) => {
     return axios.post("/signup", user).then((res) => {

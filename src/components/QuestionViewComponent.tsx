@@ -33,10 +33,10 @@ const QuestionViewComponent: React.FC<{
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer);
 
     useEffect(() => {
-        if (answerFinal != "") {
+        if (answerFinal !== "") {
             checkAnswer(setResult()).then((res) => {
                 console.log(res.data);
-                if (res.data["result"] == "correct") {
+                if (res.data["result"] === "correct") {
                     dispatch({ type: "correctNumberSet" });
                 }
                 setAnswerResult(res.data["answer"]);
@@ -124,7 +124,7 @@ const QuestionViewComponent: React.FC<{
                 answerImg={answerImg}
                 answerFinal={setAnswerFinal}
             ></AnsChoiceComponent>
-            {answerResult != "" && (
+            {answerResult !== "" && (
                 <div>
                     <AnsResultComponent
                         ansResult={answerResult}

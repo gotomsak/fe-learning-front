@@ -30,7 +30,7 @@ function TopPage() {
                 path="/learning"
             ></TopMenuBtnComponent>
             <SignoutBtnComponent setErrorMessage={setErrorMessage} />
-            {errorMessage != "" && (
+            {errorMessage !== "" && (
                 <ErrorViewComponent errMessage={errorMessage} />
             )}
         </div>

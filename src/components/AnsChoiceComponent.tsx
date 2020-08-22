@@ -23,7 +23,7 @@ const AnsChoiceComponent: React.FC<{
         console.log(e.target.value);
     };
 
-    if (answerText[0] == "") {
+    if (answerText[0] === "") {
         return (
             <div className="AnsChoiceContainer">
                 {choiceImgList?.map((i) => {
@@ -32,7 +32,7 @@ const AnsChoiceComponent: React.FC<{
                             <button onClick={choiceResult} value={i.ansImg}>
                                 {i.tag}
                             </button>
-                            <img src={i.ansImg} />
+                            <img src={i.ansImg} alt="ansImage" />
                         </div>
                     );
                 })}

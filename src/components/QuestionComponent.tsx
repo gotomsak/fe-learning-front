@@ -1,5 +1,4 @@
 import React from "react";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import "./QuestionComponent.css";
 
 const QuestionComponent: React.FC<{
@@ -12,7 +11,7 @@ const QuestionComponent: React.FC<{
                 {questionText}
                 <div className="QuestionImg">
                     {questionImg?.map((d) => {
-                        return <img src={d}></img>;
+                        return <img src={d} alt="questionImg"></img>;
                     })}
                 </div>
             </div>

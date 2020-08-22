@@ -8,7 +8,7 @@ const LogComponent: React.FC<{ calculatorResult: string }> = ({
     const calculatorRef = useRef(calculatorResult);
     useEffect(() => {
         calculatorRef.current = calculatorResult;
-        if (Log == "") {
+        if (Log === "") {
             setLog(calculatorRef.current);
         }
         setLog(Log + "\n" + calculatorRef.current);

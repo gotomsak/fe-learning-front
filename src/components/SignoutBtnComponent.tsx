@@ -7,7 +7,6 @@ const SignoutBtnComponent: React.FC<{ setErrorMessage: any }> = ({
     setErrorMessage,
 }) => {
     const history = useHistory();
-    const [errorView, setErrorView] = useState("");
     const SignoutEvent = () => {
         signout()
             .then((res) => {
