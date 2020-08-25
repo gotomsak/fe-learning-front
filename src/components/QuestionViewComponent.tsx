@@ -6,7 +6,6 @@ import CalculatorComponent from "./CalculatorComponent";
 import AnsChoiceComponent from "./AnsChoiceComponent";
 import AnsResultComponent from "./AnsResultComponent";
 import { getQuestion } from "../apis/backendAPI/getQuestion";
-import { webCameraInit } from "../apis/webCameraAPI";
 import "./QuestionViewComponent.css";
 import { checkAnswer } from "../apis/backendAPI/checkAnswer";
 import { CheckAnswerPost } from "../apis/backendAPI/interfaces";
@@ -59,7 +58,7 @@ const QuestionViewComponent: React.FC<{
     useEffect(() => {
         let windowNonFocusTimerFlag: any;
 
-        webCameraInit();
+        // webCameraInit();
         window.addEventListener("focus", () => {
             clearInterval(windowNonFocusTimerFlag);
         });

@@ -13,12 +13,7 @@ import {
     CheckAnswerSectionPost,
 } from "../apis/backendAPI/interfaces";
 
-import {
-    webCameraInit,
-    webCameraStart,
-    webCameraStop,
-    webCameraDownload,
-} from "../apis/webCameraAPI";
+import { webCameraManager } from "../apis/webCameraAPI";
 import ReadyViewComponent from "../components/ReadyViewComponent";
 import { useHistory } from "react-router";
 import QuestionViewComponent from "../components/QuestionViewComponent";
@@ -26,13 +21,17 @@ import { getQuestionIds } from "../apis/backendAPI/getQuestionIds";
 import FinishViewComponent from "../components/FinishViewComponent";
 import { checkAnswerSection } from "../apis/backendAPI/checkAnswerSection";
 import store from "..";
-import { push } from "connected-react-router";
 
+import { getNowTimeString } from "../utils/utils";
+
+const webCamera = new webCameraManager();
 function LearningPage() {
     const history = useHistory();
     const dispatch = useDispatch();
     const selector = useSelector((state) => state);
+
     const [startCheck, setStartCheck] = useState(false);
+    const [startTime, setStartTime] = useState("");
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
     const [questionID, setQuestionID] = useState(0);
     const [next, setNext] = useState(false);
@@ -46,6 +45,8 @@ function LearningPage() {
     }, [windowNonFocusTimer]);
     useEffect(() => {
         let windowNonFocusTimerFlag: any;
+        webCamera.webCameraInit();
+        setStartTime(getNowTimeString());
         window.addEventListener("focus", () => {
             clearInterval(windowNonFocusTimerFlag);
         });
@@ -61,6 +62,7 @@ function LearningPage() {
         if (qCount > 9) {
             setFinish(true);
             setStartCheck(false);
+            webCamera.webCameraStop();
         }
         if (next === true && qCount <= 9) {
             const cnt = qCount + 1;
@@ -76,6 +78,13 @@ function LearningPage() {
         }
         if (finishFlag === 2) {
             console.log("owaru");
+            checkAnswerSection(setSectionResult())
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
             history.push("/");
         }
     }, [finishFlag]);
@@ -83,6 +92,8 @@ function LearningPage() {
     useEffect(() => {
         if (startCheck === true) {
             console.log("startした");
+
+            webCamera.webCameraStart();
             const getQuestionIdsPost: GetQuestionIdsPost = {
                 solved_ids: store.getState().solvedIDsState,
                 question_ids: store.getState().questionIDsState,
@@ -104,45 +115,28 @@ function LearningPage() {
         }
     }, [selector]);
 
-    const stopButton = () => {
-        webCameraStop();
-    };
-    const downloadURL = () => {
-        const url = webCameraDownload();
-        let a = document.createElement("a");
-        document.body.appendChild(a);
-        a.href = url;
-        a.download = "test.webm";
-        a.click();
-        window.URL.revokeObjectURL(url);
-    };
-
-    const startQuestionInit = () => {
-        webCameraStart();
-    };
-
     const reset = () => {};
-    const Hoge = () => {
-        return <h1>hoge</h1>;
+    const setSectionResult = (): CheckAnswerSectionPost => {
+        const faceVideo = webCamera.getBlobData();
+        console.log(faceVideo);
+        return {
+            user_id: Number(localStorage.getItem("user_id")),
+            answer_result_ids: store.getState().ansResultIDsState,
+            correct_answer_number: store.getState().correctNumberState,
+            other_focus_second: windowNonFocusTimer,
+            face_video: faceVideo,
+            start_time: startTime,
+            end_time: getNowTimeString(),
+        };
     };
-    // const setSectionResult = ():CheckAnswerSectionPost =>{
-    //     return {
-    //         user_id: Number(localStorage.getItem("user_id")),
-    //         answer_result_ids: answerResultIDs,
-    //         correct_answer_number:
-    //     }
-    // }
     return (
         <div className="LearningPageContainer">
-            {/* <Hoge /> */}
             {startCheck ? (
                 questionID > 0 && (
                     <QuestionViewComponent
                         questionID={questionID}
                         setNext={setNext}
-                    >
-                        {startQuestionInit}
-                    </QuestionViewComponent>
+                    ></QuestionViewComponent>
                 )
             ) : finish ? (
                 <FinishViewComponent
@@ -153,8 +147,6 @@ function LearningPage() {
                     setStartCheck={setStartCheck}
                 ></ReadyViewComponent>
             )}
-            {/* <button onClick={stopButton}>stop</button>
-            <button onClick={downloadURL}>download</button> */}
         </div>
     );
 }

@@ -24,7 +24,7 @@ export interface CheckAnswerSectionPost {
     answer_result_ids: number[];
     correct_answer_number: number;
     other_focus_second: number;
-    face_video: Blob;
+    face_video?: Blob;
     start_time: string;
     end_time: string;
 }

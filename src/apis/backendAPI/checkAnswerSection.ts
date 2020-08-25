@@ -9,7 +9,10 @@ export const checkAnswerSection = (postData: CheckAnswerSectionPost) => {
         "correct_answer_number",
         postData.correct_answer_number.toString()
     );
-    data.append("face_video", postData.face_video);
+    if (postData.face_video !== undefined) {
+        console.log("into video");
+        data.append("face_video", postData.face_video);
+    }
     data.append("other_focus_second", postData.other_focus_second.toString());
     data.append("start_time", postData.start_time);
     data.append("end_time", postData.end_time);

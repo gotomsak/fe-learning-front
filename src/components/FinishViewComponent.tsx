@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { deflate } from "zlib";
 
 const FinishViewComponent: React.FC<{ setFinishFlag: any }> = ({
     setFinishFlag,
