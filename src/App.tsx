@@ -6,6 +6,7 @@ import LearningPage from "./pages/LearningPage";
 import SignupPage from "./pages/SignupPage";
 import TopPage from "./pages/TopPage";
 import SigninPage from "./pages/SigninPage";
+import QuestionnairePage from "./pages/QuestionnairePage";
 
 const App = () => {
     return (
@@ -14,6 +15,10 @@ const App = () => {
                 <Switch>
                     <Route exact path="/" component={TopPage} />
                     <Route path="/learning" component={LearningPage} />
+                    <Route
+                        path="/questionnaire"
+                        component={QuestionnairePage}
+                    />
                     <Route path="/signup" component={SignupPage} />
                     <Route path="/signin" component={SigninPage} />
                 </Switch>

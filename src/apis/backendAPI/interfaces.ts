@@ -28,3 +28,12 @@ export interface CheckAnswerSectionPost {
     start_time: string;
     end_time: string;
 }
+
+export interface SaveQuestionnairePost {
+    user_id: number;
+    answer_result_section_id: number;
+    concentration: number;
+    while_doing: string;
+    cheating: string;
+    nonsense: string;
+}

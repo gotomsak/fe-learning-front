@@ -74,9 +74,6 @@ function LearningPage() {
 
     useEffect(() => {
         if (finishFlag === 1) {
-            console.log("続ける");
-        }
-        if (finishFlag === 2) {
             console.log("owaru");
             checkAnswerSection(setSectionResult())
                 .then((res) => {
@@ -85,7 +82,7 @@ function LearningPage() {
                 .catch((err) => {
                     console.log(err);
                 });
-            history.push("/");
+            history.push("/questionnaire");
         }
     }, [finishFlag]);
 
@@ -115,7 +112,6 @@ function LearningPage() {
         }
     }, [selector]);
 
-    const reset = () => {};
     const setSectionResult = (): CheckAnswerSectionPost => {
         const faceVideo = webCamera.getBlobData();
         console.log(faceVideo);
