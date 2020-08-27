@@ -3,6 +3,7 @@
 }
 .QuestionText {
     text-align: left;
+    border: solid 1px black;
 }
 .QuestionImg {
     display: flex;

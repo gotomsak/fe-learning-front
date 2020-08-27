@@ -32,7 +32,7 @@ const AnsChoiceComponent: React.FC<{
                             <button onClick={choiceResult} value={i.ansImg}>
                                 {i.tag}
                             </button>
-                            <img src={i.ansImg} alt="ansImage" />
+                            <img src={i.ansImg} />
                         </div>
                     );
                 })}

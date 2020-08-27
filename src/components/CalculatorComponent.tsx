@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./CalculatorComponent.css";
 
 const CalculatorComponent: React.FC<{ calculatorResult: any }> = ({
     calculatorResult,
@@ -18,7 +19,7 @@ const CalculatorComponent: React.FC<{ calculatorResult: any }> = ({
         setResult("");
     };
     return (
-        <div className="Calculator">
+        <div className="CalculatorContainer">
             <input type="text" value={result} />
             <div>
                 <input
@@ -105,7 +106,12 @@ const CalculatorComponent: React.FC<{ calculatorResult: any }> = ({
                 <input type="button" value="=" onClick={() => calc()} />
             </div>
             <div>
-                <input type="button" value="clear" onClick={() => clear()} />
+                <input
+                    type="button"
+                    value="clear"
+                    className="clear"
+                    onClick={() => clear()}
+                />
             </div>
         </div>
     );

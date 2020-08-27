@@ -1,7 +1,7 @@
 .AnsList {
     display: flex;
     justify-content: space-between;
-    border: solid;
+    border: solid 1px;
     width: auto;
     margin: 30px;
 }

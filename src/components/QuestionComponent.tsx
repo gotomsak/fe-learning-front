@@ -8,10 +8,11 @@ const QuestionComponent: React.FC<{
     return (
         <div className="QuestionContainer">
             <div className="QuestionText">
-                {questionText}
+                <h4>問題</h4>
+                <h3>{questionText}</h3>
                 <div className="QuestionImg">
                     {questionImg?.map((d) => {
-                        return <img src={d} alt="questionImg"></img>;
+                        return <img src={d}></img>;
                     })}
                 </div>
             </div>

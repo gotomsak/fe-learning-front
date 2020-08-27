@@ -1,0 +1,12 @@
+.CalculatorContainer div input {
+    width: 50px;
+    height: 50px;
+}
+.CalculatorContainer input {
+    width: 200px;
+    height: 20px;
+    font-size: 20px;
+}
+.CalculatorContainer input.clear {
+    width: 70px;
+}
