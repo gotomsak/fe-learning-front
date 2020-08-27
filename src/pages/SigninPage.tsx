@@ -20,7 +20,7 @@ function SigninPage() {
         }
     };
     const signinSubmit = () => {
-        let user: User = { email: email, password: password };
+        const user: User = { email: email, password: password };
         signin(user)
             .then((res) => {
                 localStorage.setItem("user_id", res.data["user_id"]);
@@ -48,7 +48,7 @@ function SigninPage() {
             </label>
             <br />
             <label>
-                passowrd:
+                password:
                 <input
                     type="password"
                     className="password"
