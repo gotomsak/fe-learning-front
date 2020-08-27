@@ -25,6 +25,7 @@ const QuestionViewComponent: React.FC<{
     const [answerText, setAnswerText] = useState([]);
     const [answerImg, setAnswerImg] = useState([]);
     const [calculatorResult, setCalculatorResult] = useState("");
+    const [log, setLog] = useState("");
     const [answerResult, setAnswerResult] = useState("");
     const [answerFinal, setAnswerFinal] = useState("");
     const [startTime, setStartTime] = useState("");
@@ -91,7 +92,7 @@ const QuestionViewComponent: React.FC<{
         return {
             question_id: questionID,
             user_id: Number(localStorage.getItem("user_id")),
-            memo_log: calculatorResult,
+            memo_log: log,
             other_focus_second: windowNonFocusTimer,
             user_answer: answerFinal,
             start_time: startTime,
@@ -104,15 +105,18 @@ const QuestionViewComponent: React.FC<{
     };
 
     return (
-        <div className="QuestionContainer">
+        <div className="QuestionViewContainer">
             <TitleComponent title={questionTitle}></TitleComponent>
             <QuestionComponent
                 questionText={questionText}
                 questionImg={questionImg}
             ></QuestionComponent>
+            <br />
             <div className="LogsContainer">
                 <LogComponent
                     calculatorResult={calculatorResult}
+                    log={log}
+                    setLog={setLog}
                 ></LogComponent>
                 <CalculatorComponent
                     calculatorResult={setCalculatorResult}

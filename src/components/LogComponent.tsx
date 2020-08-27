@@ -1,18 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./LogComponent.css";
 
-const LogComponent: React.FC<{ calculatorResult: string }> = ({
-    calculatorResult,
-}) => {
-    const [Log, setLog] = useState("");
+const LogComponent: React.FC<{
+    calculatorResult: string;
+    log: string;
+    setLog: any;
+}> = ({ calculatorResult, log, setLog }) => {
     const calculatorRef = useRef(calculatorResult);
     useEffect(() => {
         calculatorRef.current = calculatorResult;
-        if (Log === "") {
+        if (log === "") {
             setLog(calculatorRef.current);
         }
-        setLog(Log + "\n" + calculatorRef.current);
-        console.log(calculatorRef.current);
+        if (calculatorResult !== "") {
+            setLog(log + "\n" + calculatorRef.current);
+        }
     }, [calculatorResult]);
     const changeText = (e: any) => {
         console.log(e.target.value);
@@ -20,7 +22,7 @@ const LogComponent: React.FC<{ calculatorResult: string }> = ({
     };
     return (
         <div className="LogContainer">
-            <textarea onChange={changeText} value={Log}></textarea>
+            <textarea onChange={changeText} value={log}></textarea>
         </div>
     );
 };
