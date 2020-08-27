@@ -2,6 +2,12 @@ import { User } from "./interfaces";
 import { axios } from "./index";
 
 export const signup = (user: User) => {
+    const data = new FormData();
+    if (user.username !== undefined) {
+        data.append("username", user.username);
+    }
+    data.append("email", user.email);
+    data.append("password", user.password);
     return axios.post("/signup", user).then((res) => {
         return res;
     });
