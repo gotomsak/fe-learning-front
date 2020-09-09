@@ -23,13 +23,25 @@ import { checkAnswerSection } from "../apis/backendAPI/checkAnswerSection";
 import store from "..";
 
 import { getNowTimeString } from "../utils/utils";
+import WebCameraComponent from "../components/WebCameraComponent";
 
 const webCamera = new webCameraManager();
+const webSocket = new WebSocket("ws://localhost:8765");
+webSocket.onmessage = (event) => {
+    console.log(event.data);
+};
+webSocket.onclose = (event) => {
+    console.log("simeta");
+};
+
+webSocket.onopen = (event) => {
+    console.log("seikou");
+};
 function LearningPage() {
     const history = useHistory();
     const dispatch = useDispatch();
     const selector = useSelector((state) => state);
-
+    const [webSocketSendTimer, setWebSocketSendTimer] = useState(0);
     const [startCheck, setStartCheck] = useState(false);
     const [startTime, setStartTime] = useState("");
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
@@ -43,6 +55,7 @@ function LearningPage() {
     useEffect(() => {
         refWindowNonFocusTimer.current = windowNonFocusTimer;
     }, [windowNonFocusTimer]);
+
     useEffect(() => {
         let windowNonFocusTimerFlag: any;
         webCamera.webCameraInit();
@@ -91,6 +104,10 @@ function LearningPage() {
             console.log("startした");
 
             webCamera.webCameraStart();
+            setInterval(() => {
+                webSocket.send(webCamera.getCanvasData());
+            }, 33);
+
             const getQuestionIdsPost: GetQuestionIdsPost = {
                 solved_ids: store.getState().solvedIDsState,
                 question_ids: store.getState().questionIDsState,
@@ -129,10 +146,13 @@ function LearningPage() {
         <div className="LearningPageContainer">
             {startCheck ? (
                 questionID > 0 && (
-                    <QuestionViewComponent
-                        questionID={questionID}
-                        setNext={setNext}
-                    ></QuestionViewComponent>
+                    <div>
+                        <QuestionViewComponent
+                            questionID={questionID}
+                            setNext={setNext}
+                        ></QuestionViewComponent>
+                        <WebCameraComponent></WebCameraComponent>
+                    </div>
                 )
             ) : finish ? (
                 <FinishViewComponent
