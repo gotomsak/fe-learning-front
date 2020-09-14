@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { signout } from "../apis/backendAPI";
 import { kMaxLength } from "buffer";
+import TopMenuBtnComponent from "./TopMenuBtnComponent";
 
 const SignoutBtnComponent: React.FC<{ setErrorMessage: any }> = ({
     setErrorMessage,

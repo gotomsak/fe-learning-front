@@ -41,7 +41,6 @@ function LearningPage() {
     const history = useHistory();
     const dispatch = useDispatch();
     const selector = useSelector((state) => state);
-    const [webSocketSendTimer, setWebSocketSendTimer] = useState(0);
     const [startCheck, setStartCheck] = useState(false);
     const [startTime, setStartTime] = useState("");
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
@@ -106,7 +105,7 @@ function LearningPage() {
             webCamera.webCameraStart();
             setInterval(() => {
                 webSocket.send(webCamera.getCanvasData());
-            }, 33);
+            }, 500);
 
             const getQuestionIdsPost: GetQuestionIdsPost = {
                 solved_ids: store.getState().solvedIDsState,

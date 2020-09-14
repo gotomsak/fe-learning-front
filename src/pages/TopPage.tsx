@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import TopMenuBtnComponent from "../components/TopMenuBtnComponent";
-import Cookies from "js-cookie";
 import { useHistory } from "react-router";
 import { checkSession } from "../apis/backendAPI";
 import ErrorViewComponent from "../components/ErrorViewComponent";
-import SignoutBtnComponent from "../components/SignoutBtnComponent";
+import { signout } from "../apis/backendAPI";
 
 function TopPage() {
     const history = useHistory();
@@ -22,6 +21,17 @@ function TopPage() {
         console.log(errorMessage);
     }, [errorMessage]);
 
+    const SignoutEvent = () => {
+        signout()
+            .then((res) => {
+                history.push("/signin");
+                setErrorMessage("ok");
+            })
+            .catch((err) => {
+                setErrorMessage(err.data);
+            });
+    };
+
     return (
         <div className="TopPageContainer">
             <h1>fe-learing</h1>
@@ -29,10 +39,15 @@ function TopPage() {
                 btnText="learning"
                 path="/learning"
             ></TopMenuBtnComponent>
-            <SignoutBtnComponent setErrorMessage={setErrorMessage} />
+            <TopMenuBtnComponent
+                btnText={"signout"}
+                event={SignoutEvent}
+            ></TopMenuBtnComponent>
+
+            {/* <SignoutBtnComponent setErrorMessage={setErrorMessage} />
             {errorMessage !== "" && (
                 <ErrorViewComponent errMessage={errorMessage} />
-            )}
+            )} */}
         </div>
     );
 }

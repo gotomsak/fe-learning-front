@@ -4,6 +4,9 @@ import { User } from "../apis/backendAPI/interfaces";
 import store from "../index";
 import { useHistory } from "react-router";
 import ErrorViewComponent from "../components/ErrorViewComponent";
+import { Input, InputLabel, Button } from "@material-ui/core";
+import "./SigninPage.css";
+
 function SigninPage() {
     const history = useHistory();
     const [errorMessage, setErrorMessage] = useState("");
@@ -34,31 +37,38 @@ function SigninPage() {
 
     return (
         <div className="SigninPageContainer">
-            <h1>SigninPage</h1>
-
-            <label>
-                email:
-                <input
-                    type="text"
-                    className="email"
-                    name="email"
-                    value={email}
-                    onChange={formChange}
-                />
-            </label>
-            <br />
-            <label>
-                password:
-                <input
-                    type="password"
-                    className="password"
-                    name="password"
-                    value={password}
-                    onChange={formChange}
-                />
-            </label>
-            <br />
-            <input type="submit" value="submit" onClick={signinSubmit} />
+            <div className="SigninForm">
+                <h1>サインイン</h1>
+                <p>
+                    <Input
+                        type="text"
+                        placeholder="email"
+                        name="email"
+                        onChange={formChange}
+                        value={email}
+                        margin="dense"
+                    ></Input>
+                </p>
+                <p>
+                    <Input
+                        type="password"
+                        name="password"
+                        placeholder="password"
+                        onChange={formChange}
+                        value={password}
+                    ></Input>
+                </p>
+                <p>
+                    <Button
+                        type="submit"
+                        value="submit"
+                        onClick={signinSubmit}
+                        color="secondary"
+                    >
+                        submit
+                    </Button>
+                </p>
+            </div>
             {errorMessage !== "" && (
                 <ErrorViewComponent
                     errMessage={errorMessage}
