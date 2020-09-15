@@ -8,11 +8,13 @@ const TopMenuBtnComponent: React.FC<{
 }> = ({ btnText, path, event }) => {
     return (
         <div className="TopMenuBtnContainer">
-            <a href={path}>
-                <Button onClick={event} color="secondary">
-                    {btnText}
-                </Button>
-            </a>
+            <p>
+                <a href={path}>
+                    <Button onClick={event} color="secondary">
+                        {btnText}
+                    </Button>
+                </a>
+            </p>
         </div>
     );
 };
