@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { signup } from "../apis/backendAPI/userAuth";
 import { User } from "../apis/backendAPI/interfaces";
+import { Input, Button } from "@material-ui/core";
+import "./SignupPage.css";
 
 function SignupPage() {
     const [username, setUsername] = useState("");
@@ -38,36 +40,47 @@ function SignupPage() {
 
     return (
         <div className="SignupPageContainer">
-            <h1>SignupPage</h1>
+            <div className="SignupForm">
+                <h1>サインアップ</h1>
+                <p>
+                    <Input
+                        type="text"
+                        placeholder="username"
+                        name="username"
+                        onChange={formChange}
+                        value={username}
+                    ></Input>
+                </p>
+                <p>
+                    <Input
+                        type="text"
+                        placeholder="email"
+                        name="email"
+                        onChange={formChange}
+                        value={email}
+                    ></Input>
+                </p>
+                <p>
+                    <Input
+                        type="password"
+                        placeholder="password"
+                        name="password"
+                        onChange={formChange}
+                        value={password}
+                    ></Input>
+                </p>
+                <p>
+                    <Button
+                        type="submit"
+                        value="submit"
+                        onClick={signupSubmit}
+                        color="secondary"
+                    >
+                        submit
+                    </Button>
+                </p>
+            </div>
 
-            <label>
-                username:
-                <input
-                    type="text"
-                    className="username"
-                    onChange={formChange}
-                ></input>
-            </label>
-            <br />
-            <label>
-                email:
-                <input
-                    type="text"
-                    className="email"
-                    onChange={formChange}
-                ></input>
-            </label>
-            <br />
-            <label>
-                password:
-                <input
-                    type="password"
-                    className="password"
-                    onChange={formChange}
-                ></input>
-            </label>
-            <br />
-            <button onClick={signupSubmit}>submit</button>
             <div>
                 <h2>{signupMessage}</h2>
             </div>
