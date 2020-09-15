@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import { checkSession } from "../apis/backendAPI";
 import ErrorViewComponent from "../components/ErrorViewComponent";
 import { signout } from "../apis/backendAPI";
+import "./TopPage.css";
 
 function TopPage() {
     const history = useHistory();
@@ -35,14 +36,21 @@ function TopPage() {
     return (
         <div className="TopPageContainer">
             <h1>fe-learing</h1>
-            <TopMenuBtnComponent
-                btnText="learning"
-                path="/learning"
-            ></TopMenuBtnComponent>
-            <TopMenuBtnComponent
-                btnText={"signout"}
-                event={SignoutEvent}
-            ></TopMenuBtnComponent>
+            <div className="TopMenu">
+                <h2>メニュー</h2>
+                <TopMenuBtnComponent
+                    btnText="学習を始める"
+                    path="/learning"
+                ></TopMenuBtnComponent>
+                <TopMenuBtnComponent
+                    btnText={"サインアウト"}
+                    event={SignoutEvent}
+                ></TopMenuBtnComponent>
+                <TopMenuBtnComponent
+                    btnText={"サインアップ"}
+                    path="/signup"
+                ></TopMenuBtnComponent>
+            </div>
 
             {/* <SignoutBtnComponent setErrorMessage={setErrorMessage} />
             {errorMessage !== "" && (

@@ -1,0 +1,18 @@
+.TopPageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.TopMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid;
+    align-items: center;
+    margin: 50px;
+    padding: 50px;
+}
