@@ -6,6 +6,7 @@ import { useHistory } from "react-router";
 import ErrorViewComponent from "../components/ErrorViewComponent";
 import { Input, InputLabel, Button } from "@material-ui/core";
 import "./SigninPage.css";
+import TopMenuBtnComponent from "../components/TopMenuBtnComponent";
 
 function SigninPage() {
     const history = useHistory();
@@ -46,7 +47,6 @@ function SigninPage() {
                         name="email"
                         onChange={formChange}
                         value={email}
-                        margin="dense"
                     ></Input>
                 </p>
                 <p>
@@ -69,6 +69,11 @@ function SigninPage() {
                     </Button>
                 </p>
             </div>
+
+            <TopMenuBtnComponent
+                btnText={"新規登録"}
+                path="/signup"
+            ></TopMenuBtnComponent>
             {errorMessage !== "" && (
                 <ErrorViewComponent
                     errMessage={errorMessage}

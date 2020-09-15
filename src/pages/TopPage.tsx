@@ -46,10 +46,6 @@ function TopPage() {
                     btnText={"サインアウト"}
                     event={SignoutEvent}
                 ></TopMenuBtnComponent>
-                <TopMenuBtnComponent
-                    btnText={"サインアップ"}
-                    path="/signup"
-                ></TopMenuBtnComponent>
             </div>
 
             {/* <SignoutBtnComponent setErrorMessage={setErrorMessage} />
