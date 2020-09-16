@@ -5,11 +5,7 @@ import React, {
     createRef,
     RefObject,
 } from "react";
-import { deflate } from "zlib";
-import { webCameraManager } from "../apis/webCameraAPI";
 
-// const webCamera = new webCameraManager();
-// let recorder: MediaRecorder;
 const webSocket = new WebSocket("ws://localhost:8765");
 webSocket.onmessage = (event) => {
     console.log(event.data);
@@ -118,7 +114,6 @@ const WebCameraComponent: React.FC<{
     return (
         <div className="WebCameraContainer">
             <video ref={videoRef} id="video" autoPlay></video>
-            <button onClick={test}>test</button>
         </div>
     );
 };
