@@ -73,16 +73,6 @@ const WebCameraComponent: React.FC<{
             setBlobData(getBlobData());
         }
     }, [stop]);
-    const test = () => {
-        webCameraInit().then((stream) => {
-            video!.srcObject = stream!;
-            setRecorder(
-                new MediaRecorder(stream!, {
-                    mimeType: "video/webm",
-                })
-            );
-        });
-    };
 
     const webCameraInit = async () => {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
