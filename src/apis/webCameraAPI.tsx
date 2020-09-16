@@ -52,9 +52,8 @@ export class webCameraManager {
     }
 
     webCameraStop() {
-        if (this.streamData !== undefined) {
-            this.streamData.getVideoTracks()[0].stop();
-        }
+        this.streamData!.getVideoTracks()[0].stop();
+
         this.recorder?.stop();
     }
     // flush() {

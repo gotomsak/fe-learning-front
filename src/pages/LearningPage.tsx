@@ -13,7 +13,6 @@ import {
     CheckAnswerSectionPost,
 } from "../apis/backendAPI/interfaces";
 
-import { webCameraManager } from "../apis/webCameraAPI";
 import ReadyViewComponent from "../components/ReadyViewComponent";
 import { useHistory } from "react-router";
 import QuestionViewComponent from "../components/QuestionViewComponent";
@@ -25,18 +24,6 @@ import store from "..";
 import { getNowTimeString } from "../utils/utils";
 import WebCameraComponent from "../components/WebCameraComponent";
 
-const webCamera = new webCameraManager();
-const webSocket = new WebSocket("ws://localhost:8765");
-webSocket.onmessage = (event) => {
-    console.log(event.data);
-};
-webSocket.onclose = (event) => {
-    console.log("simeta");
-};
-
-webSocket.onopen = (event) => {
-    console.log("seikou");
-};
 function LearningPage() {
     const history = useHistory();
     const dispatch = useDispatch();
@@ -49,6 +36,7 @@ function LearningPage() {
     const [finish, setFinish] = useState(false);
     const [finishFlag, setFinishFlag] = useState(0);
     const [qCount, setQCount] = useState(0);
+    const [blobData, setBlobData] = useState<Blob | null>(null);
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer);
 
     useEffect(() => {
@@ -57,7 +45,6 @@ function LearningPage() {
 
     useEffect(() => {
         let windowNonFocusTimerFlag: any;
-        webCamera.webCameraInit();
         setStartTime(getNowTimeString());
         window.addEventListener("focus", () => {
             clearInterval(windowNonFocusTimerFlag);
@@ -74,7 +61,6 @@ function LearningPage() {
         if (qCount > 9) {
             setFinish(true);
             setStartCheck(false);
-            webCamera.webCameraStop();
         }
         if (next === true && qCount <= 9) {
             const cnt = qCount + 1;
@@ -101,12 +87,6 @@ function LearningPage() {
     useEffect(() => {
         if (startCheck === true) {
             console.log("startした");
-
-            webCamera.webCameraStart();
-            setInterval(() => {
-                webSocket.send(webCamera.getCanvasData());
-            }, 500);
-
             const getQuestionIdsPost: GetQuestionIdsPost = {
                 solved_ids: store.getState().solvedIDsState,
                 question_ids: store.getState().questionIDsState,
@@ -129,14 +109,12 @@ function LearningPage() {
     }, [selector]);
 
     const setSectionResult = (): CheckAnswerSectionPost => {
-        const faceVideo = webCamera.getBlobData();
-        console.log(faceVideo);
         return {
             user_id: Number(localStorage.getItem("user_id")),
             answer_result_ids: store.getState().ansResultIDsState,
             correct_answer_number: store.getState().correctNumberState,
             other_focus_second: windowNonFocusTimer,
-            face_video: faceVideo,
+            face_video: blobData!,
             start_time: startTime,
             end_time: getNowTimeString(),
         };
@@ -150,7 +128,6 @@ function LearningPage() {
                             questionID={questionID}
                             setNext={setNext}
                         ></QuestionViewComponent>
-                        <WebCameraComponent></WebCameraComponent>
                     </div>
                 )
             ) : finish ? (
@@ -162,6 +139,11 @@ function LearningPage() {
                     setStartCheck={setStartCheck}
                 ></ReadyViewComponent>
             )}
+            <WebCameraComponent
+                start={startCheck}
+                stop={finish}
+                setBlobData={setBlobData}
+            ></WebCameraComponent>
         </div>
     );
 }
