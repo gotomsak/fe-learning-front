@@ -71,6 +71,7 @@ const WebCameraComponent: React.FC<{
     useEffect(() => {
         if (stop === true) {
             setBlobData(getBlobData());
+            recorder!.stop();
         }
     }, [stop]);
 
