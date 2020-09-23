@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React from "react";
 import "./AnsChoiceComponent.css";
 
@@ -27,14 +28,18 @@ const AnsChoiceComponent: React.FC<{
             {choice?.map((i, index) => {
                 return (
                     <div className="AnsList" key={i}>
-                        <button onClick={choiceResult} value={i} key={i}>
-                            {index + 1}
-                        </button>
-                        {answerText[0] === "" ? (
-                            <img src={i} key={i} />
-                        ) : (
-                            <h4>{i}</h4>
-                        )}
+                        <Button
+                            variant="contained"
+                            onClick={choiceResult}
+                            value={i}
+                            key={i}
+                        >
+                            {answerText[0] === "" ? (
+                                <img src={i} key={i} />
+                            ) : (
+                                <h4>{i}</h4>
+                            )}
+                        </Button>
                     </div>
                 );
             })}
