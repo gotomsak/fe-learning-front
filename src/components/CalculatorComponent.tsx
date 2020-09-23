@@ -20,7 +20,7 @@ const CalculatorComponent: React.FC<{ calculatorResult: any }> = ({
     };
     return (
         <div className="CalculatorContainer">
-            <input type="text" value={result} />
+            <input type="text" value={result} readOnly />
             <div>
                 <input
                     type="button"
