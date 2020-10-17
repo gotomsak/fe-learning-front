@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 
 const FinishViewComponent: React.FC<{ setFinishFlag: any }> = ({
@@ -7,12 +8,14 @@ const FinishViewComponent: React.FC<{ setFinishFlag: any }> = ({
     //     setFinishFlag(2);
     // };
     const NextButton = () => {
-        setFinishFlag(1);
+        setFinishFlag(true);
     };
     return (
         <div>
             <h1>10問終了しました</h1>
-            <button onClick={NextButton}>次へ</button>
+            <Button onClick={NextButton} color="secondary">
+                次へ
+            </Button>
             {/* <button onClick={FinishButton}>やめる</button> */}
         </div>
     );

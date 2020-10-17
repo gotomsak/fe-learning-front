@@ -23,6 +23,7 @@ import store from "..";
 
 import { getNowTimeString } from "../utils/utils";
 import WebCameraComponent from "../components/WebCameraComponent";
+import { BtoFtoC } from "../interfaces";
 
 function LearningPage() {
     const history = useHistory();
@@ -33,12 +34,26 @@ function LearningPage() {
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
     const [questionID, setQuestionID] = useState(0);
     const [next, setNext] = useState(false);
+
+    // 問題が10問とき終わったときのstate
     const [finish, setFinish] = useState(false);
-    const [finishFlag, setFinishFlag] = useState(0);
+
+    // FinishViewのボタンクリック時の判定
+    const [finishFlag, setFinishFlag] = useState(false);
     const [qCount, setQCount] = useState(0);
     const [blobData, setBlobData] = useState<Blob | null>(null);
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer);
-
+    const [webSocketData, setWebSocketData] = useState<BtoFtoC>({
+        w: [],
+        blink: 0,
+        face_move: 0,
+        c1: [],
+        c2: [],
+        c3: [],
+    });
+    // const [getWebSocketData, setGetWebSocketData] = useState<{
+    //     [name: string]: Array<any>;
+    // }>({});
     useEffect(() => {
         refWindowNonFocusTimer.current = windowNonFocusTimer;
     }, [windowNonFocusTimer]);
@@ -71,7 +86,7 @@ function LearningPage() {
     }, [next]);
 
     useEffect(() => {
-        if (finishFlag === 1) {
+        if (finishFlag === true) {
             console.log("owaru");
             checkAnswerSection(setSectionResult())
                 .then((res) => {
@@ -107,6 +122,18 @@ function LearningPage() {
             setQuestionID(store.getState().questionIDsState[0]);
         }
     }, [selector]);
+    const webSocketDataAdd = (e: any) => {
+        console.log(e.data["blink"]);
+        setWebSocketData({
+            blink: webSocketData.blink + e.data["blink"],
+            face_move: webSocketData.face_move + e.data["face_move"],
+            w: webSocketData.w + e.data["w"],
+            c1: [...webSocketData.c1, e.data["c1"]],
+            c2: [...webSocketData.c2, e.data["c2"]],
+            c3: [...webSocketData.w, e.data["c3"]],
+        });
+        console.log(webSocketData);
+    };
 
     const setSectionResult = (): CheckAnswerSectionPost => {
         return {
@@ -118,6 +145,16 @@ function LearningPage() {
             start_time: startTime,
             end_time: getNowTimeString(),
         };
+    };
+    const readyViewText = () => {
+        return (
+            <div>
+                <h1>準備は良いですか？</h1>
+                <h2>良ければスタートボタンを押してください</h2>
+                <h3>10問おきに継続，終了を選べます</h3>
+                <h3>終了後アンケートにお答えください</h3>
+            </div>
+        );
     };
     return (
         <div className="LearningPageContainer">
@@ -137,12 +174,14 @@ function LearningPage() {
             ) : (
                 <ReadyViewComponent
                     setStartCheck={setStartCheck}
+                    readyViewText={readyViewText}
                 ></ReadyViewComponent>
             )}
             <WebCameraComponent
                 start={startCheck}
                 stop={finish}
                 setBlobData={setBlobData}
+                setWebSocketData={webSocketDataAdd}
             ></WebCameraComponent>
         </div>
     );

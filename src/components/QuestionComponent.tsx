@@ -12,7 +12,7 @@ const QuestionComponent: React.FC<{
                 <h3>{questionText}</h3>
                 <div className="QuestionImg">
                     {questionImg?.map((d) => {
-                        return <img src={d}></img>;
+                        return <img src={d} key={d}></img>;
                     })}
                 </div>
             </div>

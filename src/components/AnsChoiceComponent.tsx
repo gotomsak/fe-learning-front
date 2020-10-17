@@ -19,8 +19,8 @@ const AnsChoiceComponent: React.FC<{
     }
 
     const choiceResult: any = (e: any) => {
-        answerFinal(String(e.target.value));
-        console.log(e.target.value);
+        console.log(e.currentTarget.value);
+        answerFinal(e.currentTarget.value);
     };
 
     return (

@@ -7,7 +7,7 @@ import SignupPage from "./pages/SignupPage";
 import TopPage from "./pages/TopPage";
 import SigninPage from "./pages/SigninPage";
 import QuestionnairePage from "./pages/QuestionnairePage";
-
+import FrequencyPage from "./pages/FrequencyPage";
 const App = () => {
     return (
         <div className="App">
@@ -19,6 +19,7 @@ const App = () => {
                         path="/questionnaire"
                         component={QuestionnairePage}
                     />
+                    <Route path="/frequency" component={FrequencyPage} />
                     <Route path="/signup" component={SignupPage} />
                     <Route path="/signin" component={SigninPage} />
                 </Switch>

@@ -1,12 +1,8 @@
-/* .LogContainer{
-    display: flex;
-    justify-content: space-evenly;
-} */
 .LearningPageContainer {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     width: 100%;
     height: 100%;
 }

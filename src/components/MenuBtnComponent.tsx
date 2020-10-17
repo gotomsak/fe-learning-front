@@ -1,22 +1,22 @@
 import React from "react";
 import { Button } from "@material-ui/core";
+import { useHistory } from "react-router";
 
-const TopMenuBtnComponent: React.FC<{
+const MenuBtnComponent: React.FC<{
     btnText: string;
-    path?: string;
     event?: any;
-}> = ({ btnText, path, event }) => {
+}> = ({ btnText, event }) => {
+    const history = useHistory();
+
     return (
-        <div className="TopMenuBtnContainer">
+        <div className="MenuBtnContainer">
             <p>
-                <a href={path}>
-                    <Button onClick={event} color="secondary">
-                        {btnText}
-                    </Button>
-                </a>
+                <Button onClick={event} color="secondary">
+                    {btnText}
+                </Button>
             </p>
         </div>
     );
 };
 
-export default TopMenuBtnComponent;
+export default MenuBtnComponent;

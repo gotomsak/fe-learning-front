@@ -10,16 +10,16 @@ function SignupPage() {
     const [password, setPassword] = useState("");
     const [signupMessage, setSignupMessage] = useState("");
 
-    const formChange = (event: any) => {
-        switch (event.target.name) {
+    const formChange = (e: any) => {
+        switch (e.currentTarget.value) {
             case "username":
-                setUsername(event.target.name);
+                setUsername(e.currentTarget.value);
                 break;
             case "email":
-                setEmail(event.target.name);
+                setEmail(e.currentTarget.value);
                 break;
             case "password":
-                setPassword(event.target.name);
+                setPassword(e.currentTarget.value);
                 break;
         }
     };

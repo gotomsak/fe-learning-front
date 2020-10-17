@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import TopMenuBtnComponent from "../components/TopMenuBtnComponent";
+import MenuBtnComponent from "../components/MenuBtnComponent";
 import { useHistory } from "react-router";
 import { checkSession } from "../apis/backendAPI";
 import ErrorViewComponent from "../components/ErrorViewComponent";
@@ -32,20 +32,30 @@ function TopPage() {
                 setErrorMessage(err.data);
             });
     };
+    const StartLearning = () => {
+        history.push("/learning");
+    };
+    const Frequency = () => {
+        history.push("/frequency");
+    };
 
     return (
         <div className="TopPageContainer">
             <h1>fe-learing</h1>
             <div className="TopMenu">
                 <h2>メニュー</h2>
-                <TopMenuBtnComponent
+                <MenuBtnComponent
                     btnText="学習を始める"
-                    path="/learning"
-                ></TopMenuBtnComponent>
-                <TopMenuBtnComponent
+                    event={StartLearning}
+                ></MenuBtnComponent>
+                <MenuBtnComponent
+                    btnText="頻度初期化"
+                    event={Frequency}
+                ></MenuBtnComponent>
+                <MenuBtnComponent
                     btnText={"サインアウト"}
                     event={SignoutEvent}
-                ></TopMenuBtnComponent>
+                ></MenuBtnComponent>
             </div>
 
             {/* <SignoutBtnComponent setErrorMessage={setErrorMessage} />

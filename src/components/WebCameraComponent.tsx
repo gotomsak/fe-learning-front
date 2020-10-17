@@ -5,30 +5,38 @@ import React, {
     createRef,
     RefObject,
 } from "react";
-
-const webSocket = new WebSocket("ws://localhost:8765");
-webSocket.onmessage = (event) => {
-    console.log(event.data);
-};
-webSocket.onclose = (event) => {
-    console.log("simeta");
-};
-
-webSocket.onopen = (event) => {
-    console.log("seikou");
-};
+import { useSelector, useDispatch } from "react-redux";
 
 const WebCameraComponent: React.FC<{
     start: boolean;
     stop: boolean;
     setBlobData: any;
-}> = ({ start, stop, setBlobData }) => {
+    setWebSocketData: any;
+}> = ({ start, stop, setBlobData, setWebSocketData }) => {
     const videoRef = createRef<HTMLVideoElement>();
     const [video, setVideo] = useState<HTMLVideoElement>();
     const [check, setCheck] = useState(0);
     const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
     const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
+    const [webSocket, setWebSocket] = useState<WebSocket>(
+        new WebSocket("ws://localhost:8765")
+    );
+    const [streamState, setStreamState] = useState<MediaStream | null>(null);
+    const dispatch = useDispatch();
+    webSocket.onmessage = (event) => {
+        console.log(event.data);
+        setWebSocketData(event);
+    };
+    webSocket.onclose = (event) => {
+        console.log("simeta");
+    };
 
+    webSocket.onopen = (event) => {
+        console.log("seikou");
+    };
+    webSocket.onerror = (e) => {};
+
+    // refをstateにセット？
     useEffect(() => {
         if (videoRef.current !== null) {
             setCheck(1);
@@ -36,12 +44,15 @@ const WebCameraComponent: React.FC<{
         }
         console.log(videoRef.current);
     }, []);
+
+    // レンダリング時にレコーダーをセット？
     useEffect(() => {
         console.log("check");
         console.log(videoRef);
         if (check == 1) {
             webCameraInit().then((stream) => {
                 video!.srcObject = stream!;
+                setStreamState(stream!);
                 setRecorder(
                     new MediaRecorder(stream!, {
                         mimeType: "video/webm",
@@ -51,6 +62,7 @@ const WebCameraComponent: React.FC<{
         }
     }, [check]);
 
+    // MediaRecorderが更新されるたび，blob配列にdataを保存
     useEffect(() => {
         if (recorder !== null) {
             recorder!.ondataavailable = (e) => {
@@ -59,22 +71,27 @@ const WebCameraComponent: React.FC<{
         }
     }, [recorder]);
 
+    // start時にn秒おきに同時にwebsocketで画像を送信
     useEffect(() => {
         if (start === true) {
             recorder!.start(200);
             setInterval(() => {
-                webSocket.send(getCanvasData());
+                // webSocket.send(getCanvasData());
             }, 500);
         }
     }, [start]);
 
+    // stop時にe-learning中の動画を取得，保存
     useEffect(() => {
         if (stop === true) {
+            webSocket.close();
             setBlobData(getBlobData());
+            streamState?.getTracks()[0].stop();
             recorder!.stop();
         }
     }, [stop]);
 
+    // webカメラの初期化
     const webCameraInit = async () => {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             return await navigator.mediaDevices.getUserMedia({
@@ -83,6 +100,7 @@ const WebCameraComponent: React.FC<{
         }
     };
 
+    // blobdataを取得
     const getBlobData = () => {
         const _chunks = recordedChunks.splice(0, recordedChunks.length); // バッファを空にする
         const b = new Blob(_chunks, {
@@ -91,6 +109,7 @@ const WebCameraComponent: React.FC<{
         return b;
     };
 
+    // 画像をbase64で取得
     const getCanvasData = () => {
         const canvas: HTMLCanvasElement = document.createElement("canvas");
         canvas.width = video!.offsetWidth;

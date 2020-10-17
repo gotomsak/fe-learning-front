@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { signin } from "../apis/backendAPI/index";
+import { signin } from "../apis/backendAPI/userAuth";
 import { User } from "../apis/backendAPI/interfaces";
 import store from "../index";
 import { useHistory } from "react-router";
 import ErrorViewComponent from "../components/ErrorViewComponent";
 import { Input, InputLabel, Button } from "@material-ui/core";
 import "./SigninPage.css";
-import TopMenuBtnComponent from "../components/TopMenuBtnComponent";
+import MenuBtnComponent from "../components/MenuBtnComponent";
 
 function SigninPage() {
     const history = useHistory();
@@ -34,6 +34,9 @@ function SigninPage() {
             .catch((err) => {
                 setErrorMessage(err.message);
             });
+    };
+    const changeHistory = () => {
+        history.push("/signup");
     };
 
     return (
@@ -70,10 +73,10 @@ function SigninPage() {
                 </p>
             </div>
 
-            <TopMenuBtnComponent
+            <MenuBtnComponent
                 btnText={"新規登録"}
-                path="/signup"
-            ></TopMenuBtnComponent>
+                event={changeHistory}
+            ></MenuBtnComponent>
             {errorMessage !== "" && (
                 <ErrorViewComponent
                     errMessage={errorMessage}
