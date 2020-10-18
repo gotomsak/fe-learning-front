@@ -23,7 +23,8 @@ import store from "..";
 
 import { getNowTimeString } from "../utils/utils";
 import WebCameraComponent from "../components/WebCameraComponent";
-import { BtoFtoC } from "../interfaces";
+import { BtoFtoC } from "../apis/backendAPI/interfaces";
+import { Button } from "@material-ui/core";
 
 function LearningPage() {
     const history = useHistory();
@@ -51,9 +52,7 @@ function LearningPage() {
         c2: [],
         c3: [],
     });
-    // const [getWebSocketData, setGetWebSocketData] = useState<{
-    //     [name: string]: Array<any>;
-    // }>({});
+
     useEffect(() => {
         refWindowNonFocusTimer.current = windowNonFocusTimer;
     }, [windowNonFocusTimer]);
@@ -61,6 +60,7 @@ function LearningPage() {
     useEffect(() => {
         let windowNonFocusTimerFlag: any;
         setStartTime(getNowTimeString());
+
         window.addEventListener("focus", () => {
             clearInterval(windowNonFocusTimerFlag);
         });
@@ -88,7 +88,7 @@ function LearningPage() {
     useEffect(() => {
         if (finishFlag === true) {
             console.log("owaru");
-            checkAnswerSection(setSectionResult())
+            checkAnswerSection(setSectionResult(), webSocketData)
                 .then((res) => {
                     console.log(res);
                 })
@@ -122,15 +122,16 @@ function LearningPage() {
             setQuestionID(store.getState().questionIDsState[0]);
         }
     }, [selector]);
+    // e.dataはストリング
     const webSocketDataAdd = (e: any) => {
-        console.log(e.data["blink"]);
+        const jsonData = JSON.parse(e.data);
         setWebSocketData({
-            blink: webSocketData.blink + e.data["blink"],
-            face_move: webSocketData.face_move + e.data["face_move"],
-            w: webSocketData.w + e.data["w"],
-            c1: [...webSocketData.c1, e.data["c1"]],
-            c2: [...webSocketData.c2, e.data["c2"]],
-            c3: [...webSocketData.w, e.data["c3"]],
+            blink: webSocketData.blink + jsonData["blink"],
+            face_move: webSocketData.face_move + jsonData["face_move"],
+            w: [...webSocketData.w, jsonData["w"]],
+            c1: [...webSocketData.c1, jsonData["c1"]],
+            c2: [...webSocketData.c2, jsonData["c2"]],
+            c3: [...webSocketData.c3, jsonData["c3"]],
         });
         console.log(webSocketData);
     };

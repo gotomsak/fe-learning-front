@@ -76,7 +76,7 @@ const WebCameraComponent: React.FC<{
         if (start === true) {
             recorder!.start(200);
             setInterval(() => {
-                // webSocket.send(getCanvasData());
+                webSocket.send(getCanvasData());
             }, 500);
         }
     }, [start]);

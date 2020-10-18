@@ -8,7 +8,7 @@ import ReadyViewComponent from "../components/ReadyViewComponent";
 import WebCameraComponent from "../components/WebCameraComponent";
 import { useHistory } from "react-router";
 import userEvent from "@testing-library/user-event";
-import { BtoF } from "../interfaces";
+import { BtoF } from "../apis/backendAPI/interfaces";
 import { initMaxFrequency } from "../apis/backendAPI/initMaxFrequency";
 import { initMinFrequency } from "../apis/backendAPI/initMinFrequency";
 import {
@@ -91,9 +91,10 @@ function FrequencyPage() {
         };
     };
     const webSocketDataAdd = (e: any) => {
+        const jsonData = JSON.parse(e.data);
         setWebSocketData({
-            blink: webSocketData.blink + e.data["blink"],
-            face_move: webSocketData.face_move + e.data["face_move"],
+            blink: webSocketData.blink + jsonData["blink"],
+            face_move: webSocketData.face_move + jsonData["face_move"],
         });
     };
 

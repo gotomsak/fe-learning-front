@@ -51,3 +51,17 @@ export interface InitMinFrequency{
     min_face_move_number: number;
     min_frequency_video?:Blob;
 }
+
+export interface BtoF {
+    blink: number;
+    face_move: number;
+}
+
+export interface BtoFtoC {
+    blink: number;
+    face_move: number;
+    c1: number[];
+    c2: number[];
+    c3: number[];
+    w: number[];
+}
