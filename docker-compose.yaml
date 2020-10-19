@@ -1,0 +1,10 @@
+version: '3'
+services:
+  react:
+    build: .
+    volumes:
+    - ./:/usr/src/app
+    command: sh -c "npm install && HTTPS=true npm start"
+    ports:
+      - "3000:3000"
+    stdin_open: true

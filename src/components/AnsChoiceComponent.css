@@ -1,0 +1,21 @@
+.AnsList {
+    display: flex;
+    justify-content: space-between;
+
+    width: auto;
+    margin: 30px;
+}
+.AnsLine {
+    display: flex;
+    text-align: left;
+}
+.AnsList button {
+    height: 100%;
+    width: auto;
+    font-size: large;
+}
+.AnsChoiceContainer {
+    /* display: inline-block; */
+    /* display: flex; */
+    /* justify-content: center; */
+}
