@@ -65,10 +65,12 @@ function FrequencyPage() {
             if (maxRecord === true) {
                 setMaxSend(true);
                 setMaxRecord(false);
+                setStartCheck(false);
             }
             if (minRecord === true) {
                 setMinSend(true);
                 setMinRecord(false);
+                setStartCheck(false);
             }
         }
     }, [finishCheck]);
@@ -92,57 +94,72 @@ function FrequencyPage() {
     };
     const webSocketDataAdd = (e: any) => {
         const jsonData = JSON.parse(e.data);
+        const blinkCount: number = jsonData["blink"] ? 1 : 0;
         setWebSocketData({
-            blink: webSocketData.blink + jsonData["blink"],
+            blink: webSocketData.blink + blinkCount,
             face_move: webSocketData.face_move + jsonData["face_move"],
         });
     };
 
     const recordSelect = (e: any) => {
-        if (e.currentTarget.value == "max") setMaxRecord(true);
-        if (e.currentTarget.value == "min") setMinRecord(true);
+        if (e.currentTarget.value == "max") setStartCheck(true);
+        setMaxRecord(true);
+        if (e.currentTarget.value == "min") setStartCheck(true);
+        setMinRecord(true);
+    };
+    const webSocketSendData = () => {
+        return {
+            type: "frequency",
+        };
+    };
+    const readyViewText = () => {
+        return (
+            <div>
+                <Button onClick={recordSelect} color="secondary" value={"max"}>
+                    最高頻度を算出
+                </Button>
+                <Button onClick={recordSelect} color="secondary" value={"min"}>
+                    最低頻度を算出
+                </Button>
+            </div>
+        );
+    };
+    const renderRecord = () => {
+        if (maxRecord) {
+            return (
+                <MaxFrequencyComponent
+                    setFinishCheck={setFinishCheck}
+                ></MaxFrequencyComponent>
+            );
+        }
+        if (minRecord) {
+            return (
+                <MinFrequencyComponent
+                    setFinishCheck={setFinishCheck}
+                ></MinFrequencyComponent>
+            );
+        }
     };
     return (
         <div className="FrequencyPageContainer">
-            {maxRecord ? (
-                <div>
-                    <MaxFrequencyComponent
-                        setFinishCheck={setFinishCheck}
-                    ></MaxFrequencyComponent>
-                </div>
-            ) : minRecord ? (
-                <div>
-                    <MinFrequencyComponent
-                        setFinishCheck={setFinishCheck}
-                    ></MinFrequencyComponent>
-                </div>
+            {startCheck ? (
+                renderRecord()
             ) : finishCheck ? (
                 <FinishViewComponent
                     setFinishFlag={setFinishFlag}
                 ></FinishViewComponent>
             ) : (
-                <div>
-                    <Button
-                        onClick={recordSelect}
-                        color="secondary"
-                        value={"max"}
-                    >
-                        最高頻度を算出
-                    </Button>
-                    <Button
-                        onClick={recordSelect}
-                        color="secondary"
-                        value={"min"}
-                    >
-                        最低頻度を算出
-                    </Button>
-                </div>
+                <ReadyViewComponent
+                    setStartCheck={startCheck}
+                    readyViewText={readyViewText}
+                ></ReadyViewComponent>
             )}
             <WebCameraComponent
                 start={startCheck}
                 stop={finishCheck}
                 setBlobData={setBlobData}
                 setWebSocketData={webSocketDataAdd}
+                sendData={webSocketSendData}
             ></WebCameraComponent>
         </div>
     );

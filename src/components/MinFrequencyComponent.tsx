@@ -21,37 +21,16 @@ const MinFrequencyComponent: React.FC<{ setFinishCheck: any }> = ({
         }
     }, [windowTimer]);
     useEffect(() => {
-        if (startCheck == true) {
-            setWindowTimeFlag(
-                setInterval(() => {
-                    setWindowTimer(refWindowTimer.current + 1);
-                }, 1000)
-            );
-        }
-        if (startCheck == false) {
-            clearInterval(windowTimeFlag!);
-        }
-    }, [startCheck]);
-    const readyViewText = () => {
-        return (
-            <div>
-                <h1>準備は良いですか？</h1>
-                <h2>良ければスタートボタンを押してください</h2>
-                <h3></h3>
-                <h3>終了後アンケートにお答えください</h3>
-            </div>
+        setWindowTimeFlag(
+            setInterval(() => {
+                setWindowTimer(refWindowTimer.current + 1);
+            }, 1000)
         );
-    };
+    }, []);
+
     return (
         <div className="MixFrequencyContainer">
-            {startCheck ? (
-                <div className="blue"></div>
-            ) : (
-                <ReadyViewComponent
-                    setStartCheck={setStartCheck}
-                    readyViewText={readyViewText}
-                ></ReadyViewComponent>
-            )}
+            <div className="blue"></div>
         </div>
     );
 };
