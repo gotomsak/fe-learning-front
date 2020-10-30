@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { BtoFtoC, CheckAnswerSectionPost } from "./interfaces";
+import { BtoFtoC, CheckAnswerSectionPost, SonConc } from "./interfaces";
 import { axios } from "./index";
-export const checkAnswerSection = (postData: CheckAnswerSectionPost, postDataSub: BtoFtoC) => {
+export const checkAnswerSection = (postData: CheckAnswerSectionPost, postDataBtoFtoC: BtoFtoC|null, postDataSonConc: SonConc|null) => {
     const data = new FormData();
     data.append("user_id", postData.user_id.toString());
     data.append("answer_result_ids", postData.answer_result_ids.toString());
@@ -16,12 +16,31 @@ export const checkAnswerSection = (postData: CheckAnswerSectionPost, postDataSub
     data.append("other_focus_second", postData.other_focus_second.toString());
     data.append("start_time", postData.start_time);
     data.append("end_time", postData.end_time);
-    data.append("blink", postDataSub.blink.toString())
-    data.append("face_move", postDataSub.face_move.toString())
-    data.append("w", postDataSub.w.toString())
-    data.append("c1", postDataSub.c1.toString())
-    data.append("c2", postDataSub.c2.toString())
-    data.append("c3", postDataSub.c3.toString())
+    
+    const isBtoFtoC = (arg: any): arg is BtoFtoC => {
+        return arg !== null && arg.c3 !== null && arg.c3 !== undefined && arg.c3.length !== 0;
+    };
+    const isSonConc = (arg: any): arg is SonConc => {
+        return (
+            arg!==null&&arg.concentration !== null &&
+            arg.concentration !== undefined &&
+            arg.concentration.length !== 0
+        );
+    };
+    if (isBtoFtoC(postDataBtoFtoC)){
+        data.append("blink", postDataBtoFtoC.blink.toString())
+        data.append("face_move", postDataBtoFtoC.face_move.toString())
+        data.append("angle", postDataBtoFtoC.angle.toString())
+        data.append("w", postDataBtoFtoC.w.toString())
+        data.append("c1", postDataBtoFtoC.c1.toString())
+        data.append("c2", postDataBtoFtoC.c2.toString())
+        data.append("c3", postDataBtoFtoC.c3.toString())
+        data.append("method1", "true")
+    }
+    if (isSonConc(postDataSonConc)){
+        data.append("concentration", postDataSonConc.concentration.toString())
+        data.append("method2","true")
+    }
 
     return axios.post("/check_answer_section", data).then((res) => {
         return res;
