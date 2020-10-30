@@ -58,10 +58,14 @@ export interface BtoF {
 }
 
 export interface BtoFtoC {
-    blink: number;
-    face_move: number;
+    blink: number[];
+    face_move: number[];
+    angle: any[];
     c1: number[];
     c2: number[];
     c3: number[];
     w: number[];
+}
+export interface SonConc {
+    concentration: any[];
 }

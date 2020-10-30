@@ -11,30 +11,35 @@ const WebCameraComponent: React.FC<{
     start: boolean;
     stop: boolean;
     setBlobData: any;
-    setWebSocketData: any;
-}> = ({ start, stop, setBlobData, setWebSocketData }) => {
+    setWebSocketData1: any;
+    setWebSocketData2: any;
+    method1: boolean;
+    method2: boolean;
+    sendData?: any;
+}> = ({
+    start,
+    stop,
+    setBlobData,
+    setWebSocketData1,
+    setWebSocketData2,
+    method1,
+    method2,
+    sendData,
+}) => {
     const videoRef = createRef<HTMLVideoElement>();
     const [video, setVideo] = useState<HTMLVideoElement>();
     const [check, setCheck] = useState(0);
     const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
     const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
-    const [webSocket, setWebSocket] = useState<WebSocket>(
+    const [webSocket1, setWebSocket1] = useState<WebSocket>(
         new WebSocket("ws://localhost:8765")
     );
+    const [webSocket2, setWebSocket2] = useState<WebSocket>(
+        new WebSocket("ws://192.168.10.136:8765")
+    );
+
     const [streamState, setStreamState] = useState<MediaStream | null>(null);
     const dispatch = useDispatch();
-    webSocket.onmessage = (event) => {
-        console.log(event.data);
-        setWebSocketData(event);
-    };
-    webSocket.onclose = (event) => {
-        console.log("simeta");
-    };
-
-    webSocket.onopen = (event) => {
-        console.log("seikou");
-    };
-    webSocket.onerror = (e) => {};
 
     // refをstateにセット？
     useEffect(() => {
@@ -73,10 +78,22 @@ const WebCameraComponent: React.FC<{
 
     // start時にn秒おきに同時にwebsocketで画像を送信
     useEffect(() => {
+        // { blob: getCanvasData(), data: sendData }.toString()
         if (start === true) {
             recorder!.start(200);
+            if (method1 == true) {
+                webSocketInit1();
+            }
+            if (method2 == true) {
+                webSocketInit2();
+            }
             setInterval(() => {
-                webSocket.send(getCanvasData());
+                if (method1 == true) {
+                    webSocket1!.send(getCanvasData());
+                }
+                if (method2 == true) {
+                    webSocket2!.send(getCanvasData());
+                }
             }, 500);
         }
     }, [start]);
@@ -84,12 +101,42 @@ const WebCameraComponent: React.FC<{
     // stop時にe-learning中の動画を取得，保存
     useEffect(() => {
         if (stop === true) {
-            webSocket.close();
+            webSocket1!.close();
+            webSocket2!.close();
             setBlobData(getBlobData());
             streamState?.getTracks()[0].stop();
             recorder!.stop();
         }
     }, [stop]);
+
+    const webSocketInit1 = () => {
+        webSocket1!.onmessage = (event) => {
+            console.log(event.data);
+            setWebSocketData1(event);
+        };
+        webSocket1!.onclose = (event) => {
+            console.log("simeta");
+        };
+
+        webSocket1!.onopen = (event) => {
+            console.log("seikou1");
+        };
+        webSocket1!.onerror = (e) => {};
+    };
+    const webSocketInit2 = () => {
+        webSocket2!.onmessage = (event) => {
+            console.log(event.data);
+            setWebSocketData2(event);
+        };
+        webSocket2!.onclose = (event) => {
+            console.log("simeta");
+        };
+
+        webSocket2!.onopen = (event) => {
+            console.log("seikou2");
+        };
+        webSocket2!.onerror = (e) => {};
+    };
 
     // webカメラの初期化
     const webCameraInit = async () => {
