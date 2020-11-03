@@ -8,15 +8,7 @@ const ReadyViewComponent: React.FC<{
     const buttonClick = () => {
         setStartCheck(true);
     };
-    return (
-        <div className="ReadyViewContainer">
-            {readyViewText()}
-
-            {/* <Button color="secondary" onClick={buttonClick}>
-                start
-            </Button> */}
-        </div>
-    );
+    return <div className="ReadyViewContainer">{readyViewText()}</div>;
 };
 
 export default ReadyViewComponent;

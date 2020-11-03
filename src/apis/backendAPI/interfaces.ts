@@ -24,7 +24,8 @@ export interface CheckAnswerSectionPost {
     answer_result_ids: number[];
     correct_answer_number: number;
     other_focus_second: number;
-    face_video?: Blob;
+    // face_video?: Blob;
+    // face_image_path?: string;
     start_time: string;
     end_time: string;
 }
@@ -58,6 +59,7 @@ export interface BtoF {
 }
 
 export interface BtoFtoC {
+    face_image_path: string;
     blink: number[];
     face_move: number[];
     angle: any[];
@@ -67,5 +69,6 @@ export interface BtoFtoC {
     w: number[];
 }
 export interface SonConc {
+    face_image_path: string;
     concentration: any[];
 }
