@@ -10,9 +10,7 @@ import "./QuestionViewComponent.css";
 import { checkAnswer } from "../apis/backendAPI/checkAnswer";
 import { CheckAnswerPost } from "../apis/backendAPI/interfaces";
 import { getNowTimeString } from "../utils/utils";
-import store from "..";
 import { useSelector, useDispatch } from "react-redux";
-import { correctNumberState } from "../states/correctNumberState";
 
 const QuestionViewComponent: React.FC<{
     questionID: number;

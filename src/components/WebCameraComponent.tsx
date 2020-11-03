@@ -67,14 +67,14 @@ const WebCameraComponent: React.FC<{
         }
     }, [check]);
 
-    // MediaRecorderが更新されるたび，blob配列にdataを保存
-    useEffect(() => {
-        if (recorder !== null) {
-            recorder!.ondataavailable = (e) => {
-                recordedChunks.push(e.data);
-            };
-        }
-    }, [recorder]);
+    // // MediaRecorderが更新されるたび，blob配列にdataを保存
+    // useEffect(() => {
+    //     if (recorder !== null) {
+    //         recorder!.ondataavailable = (e) => {
+    //             recordedChunks.push(e.data);
+    //         };
+    //     }
+    // }, [recorder]);
 
     // start時にn秒おきに同時にwebsocketで画像を送信
     useEffect(() => {

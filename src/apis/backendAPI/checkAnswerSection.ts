@@ -9,10 +9,10 @@ export const checkAnswerSection = (postData: CheckAnswerSectionPost, postDataBto
         "correct_answer_number",
         postData.correct_answer_number.toString()
     );
-    if (postData.face_video !== undefined) {
-        console.log("into video");
-        data.append("face_video", postData.face_video);
-    }
+    // if (postData.face_video !== undefined) {
+    //     console.log("into video");
+    //     data.append("face_video", postData.face_video);
+    // }
     data.append("other_focus_second", postData.other_focus_second.toString());
     data.append("start_time", postData.start_time);
     data.append("end_time", postData.end_time);
@@ -29,7 +29,7 @@ export const checkAnswerSection = (postData: CheckAnswerSectionPost, postDataBto
     };
     if (isBtoFtoC(postDataBtoFtoC)){
         data.append("blink", postDataBtoFtoC.blink.toString())
-        data.append("face_move", postDataBtoFtoC.face_move.toString())
+        data.append("face_image_path", postDataBtoFtoC.face_image_path.toString())
         data.append("angle", postDataBtoFtoC.angle.toString())
         data.append("w", postDataBtoFtoC.w.toString())
         data.append("c1", postDataBtoFtoC.c1.toString())
@@ -39,6 +39,7 @@ export const checkAnswerSection = (postData: CheckAnswerSectionPost, postDataBto
     }
     if (isSonConc(postDataSonConc)){
         data.append("concentration", postDataSonConc.concentration.toString())
+        data.append("face_image_path", postDataSonConc.face_image_path.toString())
         data.append("method2","true")
     }
 

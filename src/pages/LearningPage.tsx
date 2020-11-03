@@ -49,13 +49,19 @@ function LearningPage() {
     const [qCount, setQCount] = useState(0);
     const [blobData, setBlobData] = useState<Blob | null>(null);
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer);
-    const [webSocketData, setWebSocketData] = useState<BtoFtoC | null>(null);
-    const [webSocketDataSub, setWebSocketDataSub] = useState<SonConc | null>(
-        null
-    );
-    // const [concViewState, setConcViewState] = useState<
-    //     BtoFtoC | SonConc | null
-    // >(null);
+    // const [webSocketData, setWebSocketData] = useState<BtoFtoC | null>(null);
+    // const [webSocketDataSub, setWebSocketDataSub] = useState<SonConc | null>(
+    //     null
+    // );
+    const [blink, setBlink] = useState([]);
+    const [angle, setAngle] = useState([]);
+    const [imagePath, setImagePath] = useState("");
+    const [faceMove, setFaceMove] = useState([]);
+    const [c1, setC1] = useState([]);
+    const [c2, setC2] = useState([]);
+    const [c3, setC3] = useState([]);
+    const [w, setW] = useState([]);
+    const [sonConc, setSonConc] = useState([]);
 
     useEffect(() => {
         refWindowNonFocusTimer.current = windowNonFocusTimer;
@@ -94,8 +100,8 @@ function LearningPage() {
             console.log("owaru");
             checkAnswerSection(
                 setSectionResult(),
-                webSocketData,
-                webSocketDataSub
+                webSocketData1(),
+                webSocketData2()
             )
                 .then((res) => {
                     console.log(res);
@@ -103,24 +109,6 @@ function LearningPage() {
                 .catch((err) => {
                     console.log(err);
                 });
-            // if (method == 1) {
-            //     checkAnswerSection(setSectionResult(), webSocketData, webSocketDataSub)
-            //         .then((res) => {
-            //             console.log(res);
-            //         })
-            //         .catch((err) => {
-            //             console.log(err);
-            //         });
-            // }
-            // if (method == 2) {
-            //     checkAnswerSection(setSectionResult(), undefined, webSocketDataSub)
-            //         .then((res) => {
-            //             console.log(res);
-            //         })
-            //         .catch((err) => {
-            //             console.log(err);
-            //         });
-            // }
             history.push("/questionnaire");
         }
     }, [finishFlag]);
@@ -161,30 +149,47 @@ function LearningPage() {
         const jsonData = JSON.parse(e.data);
         console.log(jsonData);
         if (method1 == true) {
-            setWebSocketData({
-                blink: [...webSocketData!.w, jsonData["blink"]],
-                face_move: [...webSocketData!.face_move, jsonData["face_move"]],
-                angle: [...webSocketData!.angle, jsonData["angle"]],
-                w: [...webSocketData!.w, jsonData["w"]],
-                c1: [...webSocketData!.c1, jsonData["c1"]],
-                c2: [...webSocketData!.c2, jsonData["c2"]],
-                c3: [...webSocketData!.c3, jsonData["c3"]],
-            });
+            setBlink((blink) => blink.concat(jsonData["blink"]));
+            setAngle((angle) => angle.concat(jsonData["angle"]));
+            setW((w) => w.concat(jsonData["w"]));
+            setFaceMove((faceMove) => faceMove.concat(jsonData["face_move"]));
+            setImagePath(jsonData["face_image_path"]);
+            setC1((c1) => c1.concat(jsonData["c1"]));
+            setC2((c2) => c2.concat(jsonData["c2"]));
+            setC3((c3) => c3.concat(jsonData["c3"]));
         }
-        console.log(webSocketData);
     };
     const webSocketDataAdd2 = (e: any) => {
         const jsonData = JSON.parse(e.data);
         console.log(jsonData);
         if (method2 == true) {
-            setWebSocketDataSub({
-                concentration: [
-                    ...webSocketDataSub!.concentration,
-                    jsonData["concentration"],
-                ],
-            });
+            setImagePath(jsonData["face_image_path"]);
+            setSonConc((sonConc) => sonConc.concat(jsonData["concentration"]));
         }
-        console.log(webSocketDataSub);
+    };
+    const webSocketData1 = (): BtoFtoC | null => {
+        if (method1 === true) {
+            return {
+                blink: blink,
+                face_image_path: imagePath,
+                face_move: faceMove,
+                angle: angle,
+                w: w,
+                c1: c1,
+                c2: c2,
+                c3: c3,
+            };
+        }
+        return null;
+    };
+    const webSocketData2 = (): SonConc | null => {
+        if (method2 === true) {
+            return {
+                face_image_path: imagePath,
+                concentration: sonConc,
+            };
+        }
+        return null;
     };
 
     const sendData = () => {};
@@ -195,7 +200,6 @@ function LearningPage() {
             answer_result_ids: store.getState().ansResultIDsState,
             correct_answer_number: store.getState().correctNumberState,
             other_focus_second: windowNonFocusTimer,
-            face_video: blobData!,
             start_time: startTime,
             end_time: getNowTimeString(),
         };
@@ -214,22 +218,6 @@ function LearningPage() {
     const startCheckButton = (e: any) => {
         console.log(e.currentTarget.value);
         if (e.currentTarget.value == 1) {
-            if (method1 == true) {
-                setWebSocketData({
-                    w: [],
-                    blink: [],
-                    face_move: [],
-                    angle: [],
-                    c1: [],
-                    c2: [],
-                    c3: [],
-                });
-            }
-            if (method2 == true) {
-                setWebSocketDataSub({
-                    concentration: [],
-                });
-            }
             setStartCheck(true);
         }
     };
@@ -265,13 +253,6 @@ function LearningPage() {
                 <Button onClick={startCheckButton} color="secondary" value={1}>
                     start
                 </Button>
-
-                {/* <Button onClick={changeMethod} color="secondary" value={1}>
-                    方式1
-                </Button> */}
-                {/* <Button onClick={changeMethod} color="secondary" value={2}>
-                    方式2
-                </Button> */}
             </div>
         );
     };
@@ -285,9 +266,8 @@ function LearningPage() {
                             setNext={setNext}
                         ></QuestionViewComponent>
                         <ConcentrationViewComponent
-                            concData={null}
-                            concData1={webSocketData}
-                            concData2={webSocketDataSub}
+                            concData1={c3}
+                            concData2={sonConc}
                         ></ConcentrationViewComponent>
                     </div>
                 )
@@ -301,6 +281,7 @@ function LearningPage() {
                     readyViewText={readyViewText}
                 ></ReadyViewComponent>
             )}
+
             <WebCameraComponent
                 start={startCheck}
                 stop={finish}

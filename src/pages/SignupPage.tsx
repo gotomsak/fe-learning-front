@@ -9,17 +9,17 @@ function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [signupMessage, setSignupMessage] = useState("");
-
+    // e.currentTarget.valueじゃないの？？？
     const formChange = (e: any) => {
-        switch (e.currentTarget.value) {
+        switch (e.target.name) {
             case "username":
-                setUsername(e.currentTarget.value);
+                setUsername(e.target.value);
                 break;
             case "email":
-                setEmail(e.currentTarget.value);
+                setEmail(e.target.value);
                 break;
             case "password":
-                setPassword(e.currentTarget.value);
+                setPassword(e.target.value);
                 break;
         }
     };
