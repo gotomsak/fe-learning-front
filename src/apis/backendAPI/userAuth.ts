@@ -8,7 +8,7 @@ export const signup = (user: User) => {
     }
     data.append("email", user.email);
     data.append("password", user.password);
-    return axios.post("/signup", user).then((res) => {
+    return axios.post("/signup", data).then((res) => {
         return res;
     });
 };
