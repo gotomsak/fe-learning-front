@@ -105,6 +105,10 @@ function LearningPage() {
             )
                 .then((res) => {
                     console.log(res);
+                    dispatch({
+                        type: "ansResultSectionIDSet",
+                        id: res.data["answer_result_section_id"],
+                    });
                 })
                 .catch((err) => {
                     console.log(err);

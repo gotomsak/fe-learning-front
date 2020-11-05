@@ -30,6 +30,7 @@ export const checkAnswerSection = (postData: CheckAnswerSectionPost, postDataBto
     if (isBtoFtoC(postDataBtoFtoC)){
         data.append("blink", postDataBtoFtoC.blink.toString())
         data.append("face_image_path", postDataBtoFtoC.face_image_path.toString())
+        data.append("face_move", postDataBtoFtoC.face_move.toString())
         data.append("angle", postDataBtoFtoC.angle.toString())
         data.append("w", postDataBtoFtoC.w.toString())
         data.append("c1", postDataBtoFtoC.c1.toString())
