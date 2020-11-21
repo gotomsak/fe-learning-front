@@ -32,10 +32,10 @@ const WebCameraComponent: React.FC<{
     const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
     const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
     const [webSocket1, setWebSocket1] = useState<WebSocket>(
-        new WebSocket("ws://localhost:8765")
+        new WebSocket("wss://gc.gotomsak.work")
     );
     const [webSocket2, setWebSocket2] = useState<WebSocket>(
-        new WebSocket("ws://192.168.10.136:8765")
+        new WebSocket("wss://sc.gotomsak.work")
     );
 
     const [streamState, setStreamState] = useState<MediaStream | null>(null);
