@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BtoFtoC, CheckAnswerSectionPost, SonConc } from "./interfaces";
-import { axios } from "./index";
+import { backendAxiosConfig } from "./index";
+import axios from 'axios'
+
 export const checkAnswerSection = (postData: CheckAnswerSectionPost, postDataBtoFtoC: BtoFtoC|null, postDataSonConc: SonConc|null) => {
     const data = new FormData();
     data.append("user_id", postData.user_id.toString());
@@ -44,7 +46,7 @@ export const checkAnswerSection = (postData: CheckAnswerSectionPost, postDataBto
         data.append("method2","true")
     }
 
-    return axios.post("/check_answer_section", data).then((res) => {
+    return axios.post("/check_answer_section", data, backendAxiosConfig).then((res) => {
         return res;
     });
 };

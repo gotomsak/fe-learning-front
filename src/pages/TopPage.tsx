@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import MenuBtnComponent from "../components/MenuBtnComponent";
 import { useHistory } from "react-router";
-import { checkSession } from "../apis/backendAPI";
+import { checkSession } from "../apis/backendAPI/userAuth";
 import ErrorViewComponent from "../components/ErrorViewComponent";
-import { signout } from "../apis/backendAPI";
+import { signout } from "../apis/backendAPI/userAuth";
 import "./TopPage.css";
 
 function TopPage() {

@@ -1,6 +1,8 @@
 
 import { InitMinFrequency } from "./interfaces";
-import { axios } from "./index";
+import { backendAxiosConfig } from "./index";
+import axios from "axios"
+
 export const initMinFrequency = (postData: InitMinFrequency) => {
     let data = new FormData();
     data.append("user_id", postData.user_id.toString());
@@ -12,7 +14,7 @@ export const initMinFrequency = (postData: InitMinFrequency) => {
     }
     
 
-    return axios.post("/init_min_frequency", data).then((res) => {
+    return axios.post("/init_min_frequency", data, backendAxiosConfig).then((res) => {
         return res;
     });
 };

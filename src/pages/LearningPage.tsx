@@ -20,6 +20,7 @@ import QuestionViewComponent from "../components/QuestionViewComponent";
 import { getQuestionIds } from "../apis/backendAPI/getQuestionIds";
 import FinishViewComponent from "../components/FinishViewComponent";
 import { checkAnswerSection } from "../apis/backendAPI/checkAnswerSection";
+import { pync } from "../apis/pyncAPI";
 import store from "..";
 
 import { getNowTimeString } from "../utils/utils";
@@ -113,6 +114,11 @@ function LearningPage() {
                 .catch((err) => {
                     console.log(err);
                 });
+            pync({
+                upload_path: imagePath.toString(),
+            }).then((res) => {
+                console.log(res);
+            });
             history.push("/questionnaire");
         }
     }, [finishFlag]);
