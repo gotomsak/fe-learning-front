@@ -41,6 +41,7 @@ function LearningPage() {
     const [method, setMethod] = useState(0);
     const [method1, setMethod1] = useState(false);
     const [method2, setMethod2] = useState(false);
+    const [cameraMethod, setCameraMethod] = useState(false);
 
     // 問題が10問とき終わったときのstate
     const [finish, setFinish] = useState(false);
@@ -63,6 +64,7 @@ function LearningPage() {
     const [c3, setC3] = useState([]);
     const [w, setW] = useState([]);
     const [sonConc, setSonConc] = useState([]);
+    const [cameraStart, setCameraStart] = useState(false);
 
     useEffect(() => {
         refWindowNonFocusTimer.current = windowNonFocusTimer;
@@ -222,12 +224,18 @@ function LearningPage() {
         if (e.target.name == "method2") {
             setMethod2(e.target.checked);
         }
+        if (e.target.name == "camera") {
+            setCameraMethod(e.target.checked);
+        }
         // setMethod(e.currentTarget.value);
         // setStartCheck(true);
     };
     const startCheckButton = (e: any) => {
         console.log(e.currentTarget.value);
         if (e.currentTarget.value == 1) {
+            if (cameraMethod === true) {
+                setCameraStart(true);
+            }
             setStartCheck(true);
         }
     };
@@ -259,6 +267,17 @@ function LearningPage() {
                         />
                     }
                     label="Method2"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={cameraMethod}
+                            onChange={changeMethod}
+                            inputProps={{ "aria-label": "primary checkbox" }}
+                            name="camera"
+                        />
+                    }
+                    label="UseCamera"
                 />
                 <Button onClick={startCheckButton} color="secondary" value={1}>
                     start
@@ -293,7 +312,7 @@ function LearningPage() {
             )}
 
             <WebCameraComponent
-                start={startCheck}
+                start={cameraStart}
                 stop={finish}
                 setBlobData={setBlobData}
                 setWebSocketData1={webSocketDataAdd1}
