@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import { signout } from "../apis/backendAPI";
+import { signout } from "../apis/backendAPI/userAuth";
 import { kMaxLength } from "buffer";
 import MenuBtnComponent from "./MenuBtnComponent";
 

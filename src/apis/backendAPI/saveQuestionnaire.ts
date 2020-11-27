@@ -1,5 +1,6 @@
 import { SaveQuestionnairePost } from "./interfaces";
-import { axios } from ".";
+import { backendAxiosConfig } from "./index";
+import axios from 'axios'
 
 const saveQuestionnaire = (postData: SaveQuestionnairePost) => {
     let data = new FormData();
@@ -12,7 +13,7 @@ const saveQuestionnaire = (postData: SaveQuestionnairePost) => {
     data.append("concentration", postData.concentration.toString());
     data.append("while_doing", postData.while_doing);
     data.append("nonsense", postData.nonsense);
-    return axios.post("/save_questionnaire", data).then((res) => {
+    return axios.post("/save_questionnaire", data,backendAxiosConfig).then((res) => {
         return res;
     });
 };
