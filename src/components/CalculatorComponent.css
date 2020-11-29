@@ -10,3 +10,7 @@
 .CalculatorContainer input.clear {
     width: 70px;
 }
+
+.CalculatorContainer {
+    margin: 50px;
+}
