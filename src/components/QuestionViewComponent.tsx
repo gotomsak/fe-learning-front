@@ -11,6 +11,11 @@ import { checkAnswer } from "../apis/backendAPI/checkAnswer";
 import { CheckAnswerPost } from "../apis/backendAPI/interfaces";
 import { getNowTimeString } from "../utils/utils";
 import { useSelector, useDispatch } from "react-redux";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid, { GridSpacing } from "@material-ui/core/Grid";
+import AnsTextComponent from "./AnsTextComponent";
+import AnsImgComponent from "./AnsImgComponent";
 
 const QuestionViewComponent: React.FC<{
     questionID: number;
@@ -29,6 +34,19 @@ const QuestionViewComponent: React.FC<{
     const [startTime, setStartTime] = useState("");
     const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
     const refWindowNonFocusTimer = useRef(windowNonFocusTimer);
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+            root: {
+                flexGrow: 1,
+                margin: theme.spacing(2),
+            },
+            paper: {
+                color: theme.palette.text.secondary,
+            },
+        })
+    );
+    const [spacing, setSpacing] = useState<GridSpacing>(2);
+    const classes = useStyles();
 
     useEffect(() => {
         if (answerFinal !== "") {
@@ -102,6 +120,28 @@ const QuestionViewComponent: React.FC<{
         setNext(true);
     };
 
+    const changeAnsType = () => {
+        console.log(answerText.length);
+        console.log(answerText);
+        console.log(answerImg);
+        if (answerImg[0] !== "") {
+            return (
+                <AnsImgComponent
+                    ansImgList={answerImg}
+                    answerFinal={setAnswerFinal}
+                ></AnsImgComponent>
+            );
+        }
+        if (answerText[0] !== "") {
+            return (
+                <AnsTextComponent
+                    ansTextList={answerText}
+                    answerFinal={setAnswerFinal}
+                ></AnsTextComponent>
+            );
+        }
+    };
+
     return (
         <div className="QuestionViewContainer">
             <TitleComponent title={questionTitle}></TitleComponent>
@@ -109,22 +149,28 @@ const QuestionViewComponent: React.FC<{
                 questionText={questionText}
                 questionImg={questionImg}
             ></QuestionComponent>
-            <br />
-            <div className="LogsContainer">
-                <LogComponent
-                    calculatorResult={calculatorResult}
-                    log={log}
-                    setLog={setLog}
-                ></LogComponent>
-                <CalculatorComponent
-                    calculatorResult={setCalculatorResult}
-                ></CalculatorComponent>
+
+            {/* <div className="LogsContainer"> */}
+            <div className={classes.root}>
+                <Grid item>
+                    <Grid container spacing={spacing}>
+                        <Grid>
+                            <LogComponent
+                                calculatorResult={calculatorResult}
+                                log={log}
+                                setLog={setLog}
+                            ></LogComponent>
+                        </Grid>
+                        <Grid>
+                            <CalculatorComponent
+                                calculatorResult={setCalculatorResult}
+                            ></CalculatorComponent>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </div>
-            <AnsChoiceComponent
-                answerText={answerText}
-                answerImg={answerImg}
-                answerFinal={setAnswerFinal}
-            ></AnsChoiceComponent>
+
+            {changeAnsType()}
             {answerResult !== "" && (
                 <div>
                     <AnsResultComponent
