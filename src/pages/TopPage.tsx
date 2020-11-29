@@ -41,7 +41,7 @@ function TopPage() {
 
     return (
         <div className="TopPageContainer">
-            <h1>fe-learing</h1>
+            <h1>fe-learning</h1>
             <div className="TopMenu">
                 <h2>メニュー</h2>
                 <MenuBtnComponent
