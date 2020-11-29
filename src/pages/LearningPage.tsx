@@ -42,7 +42,7 @@ function LearningPage() {
     const [method1, setMethod1] = useState(false);
     const [method2, setMethod2] = useState(false);
     const [cameraMethod, setCameraMethod] = useState(false);
-
+    const [cameraStop, setCameraStop] = useState(false);
     // 問題が10問とき終わったときのstate
     const [finish, setFinish] = useState(false);
 
@@ -88,6 +88,10 @@ function LearningPage() {
         console.log(qCount);
         if (qCount > 9) {
             setFinish(true);
+            if (cameraStart === true) {
+                setCameraStop(true);
+            }
+
             setStartCheck(false);
         }
         if (next === true && qCount <= 9) {
@@ -313,7 +317,7 @@ function LearningPage() {
 
             <WebCameraComponent
                 start={cameraStart}
-                stop={finish}
+                stop={cameraStop}
                 setBlobData={setBlobData}
                 setWebSocketData1={webSocketDataAdd1}
                 setWebSocketData2={webSocketDataAdd2}
