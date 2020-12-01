@@ -18,7 +18,7 @@ export const backendAxiosConfig: AxiosRequestConfig = {
     withCredentials: true,
     headers: {
         'Access-Control-Allow-Origin': process.env.REACT_APP_BASE_URL,
-        'Content-Type': 'application/json',
+        'content-type': 'application/json',
     },
 }
 // export { axios };
