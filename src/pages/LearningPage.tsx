@@ -105,11 +105,7 @@ function LearningPage() {
     useEffect(() => {
         if (finishFlag === true) {
             console.log("owaru");
-            checkAnswerSection(
-                setSectionResult(),
-                webSocketData1(),
-                webSocketData2()
-            )
+            checkAnswerSection(setSectionResult())
                 .then((res) => {
                     console.log(res);
                     dispatch({
@@ -183,30 +179,6 @@ function LearningPage() {
             setSonConc((sonConc) => sonConc.concat(jsonData["concentration"]));
         }
     };
-    const webSocketData1 = (): BtoFtoC | null => {
-        if (method1 === true) {
-            return {
-                blink: blink,
-                face_image_path: imagePath,
-                face_move: faceMove,
-                angle: angle,
-                w: w,
-                c1: c1,
-                c2: c2,
-                c3: c3,
-            };
-        }
-        return null;
-    };
-    const webSocketData2 = (): SonConc | null => {
-        if (method2 === true) {
-            return {
-                face_image_path: imagePath,
-                concentration: sonConc,
-            };
-        }
-        return null;
-    };
 
     const sendData = () => {};
 
@@ -218,6 +190,17 @@ function LearningPage() {
             other_focus_second: windowNonFocusTimer,
             start_time: startTime,
             end_time: getNowTimeString(),
+            c1: c1,
+            c2: c2,
+            c3: c3,
+            concentration: sonConc,
+            face_image_path: imagePath,
+            blink: blink,
+            face_move: faceMove,
+            angle: angle,
+            w: w,
+            method1: method1,
+            method2: method2,
         };
     };
     const changeMethod = (e: any) => {

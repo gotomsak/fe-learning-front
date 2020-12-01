@@ -3,7 +3,6 @@ import TitleComponent from "./TitleComponent";
 import QuestionComponent from "./QuestionComponent";
 import LogComponent from "./LogComponent";
 import CalculatorComponent from "./CalculatorComponent";
-import AnsChoiceComponent from "./AnsChoiceComponent";
 import AnsResultComponent from "./AnsResultComponent";
 import { getQuestion } from "../apis/backendAPI/getQuestion";
 import "./QuestionViewComponent.css";
