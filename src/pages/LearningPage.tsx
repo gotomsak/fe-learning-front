@@ -112,6 +112,9 @@ function LearningPage() {
                         type: "ansResultSectionIDSet",
                         id: res.data["answer_result_section_id"],
                     });
+                    dispatch({
+                        type: "ansResultIDsReset",
+                    });
                 })
                 .catch((err) => {
                     console.log(err);
