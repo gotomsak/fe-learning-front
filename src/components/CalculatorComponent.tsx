@@ -21,7 +21,7 @@ const CalculatorComponent: React.FC<{ calculatorResult: any }> = ({
     return (
         <div className="CalculatorContainer">
             <input type="text" value={result} readOnly />
-            <div>
+            <div className="CalculatorGrid">
                 <input
                     type="button"
                     value="1"
@@ -42,8 +42,7 @@ const CalculatorComponent: React.FC<{ calculatorResult: any }> = ({
                     value="+"
                     onClick={(e) => edit(e.target)}
                 />
-            </div>
-            <div>
+
                 <input
                     type="button"
                     value="4"
@@ -64,8 +63,7 @@ const CalculatorComponent: React.FC<{ calculatorResult: any }> = ({
                     value="-"
                     onClick={(e) => edit(e.target)}
                 />
-            </div>
-            <div>
+
                 <input
                     type="button"
                     value="7"
@@ -86,8 +84,7 @@ const CalculatorComponent: React.FC<{ calculatorResult: any }> = ({
                     value="/"
                     onClick={(e) => edit(e.target)}
                 />
-            </div>
-            <div>
+
                 <input
                     type="button"
                     value="0"
@@ -104,8 +101,7 @@ const CalculatorComponent: React.FC<{ calculatorResult: any }> = ({
                     onClick={(e) => edit(e.target)}
                 />
                 <input type="button" value="=" onClick={() => calc()} />
-            </div>
-            <div>
+
                 <input
                     type="button"
                     value="clear"
