@@ -38,11 +38,17 @@ function SigninPage() {
     const changeHistory = () => {
         history.push("/signup");
     };
+    const manual = () => {
+        history.push("/manual");
+    };
 
     return (
         <div className="SigninPageContainer">
             <div className="SigninForm">
                 <h1>サインイン</h1>
+                <h3>
+                    登録せずに勉強したい方はemail,passwordを空白のままSUBMITを押してください
+                </h3>
                 <p>
                     <Input
                         type="text"
@@ -74,8 +80,12 @@ function SigninPage() {
             </div>
 
             <MenuBtnComponent
-                btnText={"新規登録"}
+                btnText={"signup"}
                 event={changeHistory}
+            ></MenuBtnComponent>
+            <MenuBtnComponent
+                btnText={"使い方&紹介"}
+                event={manual}
             ></MenuBtnComponent>
             {errorMessage !== "" && (
                 <ErrorViewComponent

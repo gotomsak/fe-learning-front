@@ -38,6 +38,9 @@ function TopPage() {
     const Frequency = () => {
         history.push("/frequency");
     };
+    const Manual = () => {
+        history.push("/manual");
+    };
 
     return (
         <div className="TopPageContainer">
@@ -51,6 +54,10 @@ function TopPage() {
                 <MenuBtnComponent
                     btnText="頻度初期化"
                     event={Frequency}
+                ></MenuBtnComponent>
+                <MenuBtnComponent
+                    btnText="使い方"
+                    event={Manual}
                 ></MenuBtnComponent>
                 <MenuBtnComponent
                     btnText={"サインアウト"}
