@@ -1,4 +1,9 @@
 # fe-learning
+## どんな物ですか？
+- 集中度が測れます(まだ変な数値が出ます，近々直す予定)
+- 基本情報技術者試験の問題でe-learningができます
+- 過去の基本情報技術者試験の問題をランダムに10問出題します
+- 今後は問題数やジャンルの選択ができるようにする予定です
 ## 使い方
 * URL: [fe-learning.gotomsak.work](https://fe-learning.gotomsak.work)
 * URLにアクセスして新規登録
