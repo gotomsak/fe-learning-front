@@ -11,10 +11,10 @@ import { useHistory } from "react-router";
 import { send } from "process";
 
 function QuestionnairePage() {
-    const [concentration, setConcentration] = useState(0);
-    const [whileDoing, setWhileDoing] = useState(false);
-    const [cheating, setCheating] = useState(false);
-    const [nonsense, setNonsense] = useState(false);
+    const [concentration, setConcentration] = useState<number>(0);
+    const [whileDoing, setWhileDoing] = useState(0);
+    const [cheating, setCheating] = useState(0);
+    const [nonsense, setNonsense] = useState(0);
     const history = useHistory();
 
     const rangeConcentrationRadio = range(1, 10);
@@ -22,23 +22,23 @@ function QuestionnairePage() {
     rangeConcentrationRadio.forEach((n) => {
         concentrationRadio.push({
             text: n.toString(),
-            value: n.toString(),
+            value: n,
         });
     });
 
     const boolRadio: any = [
-        { text: "はい", value: true },
-        { text: "いいえ", value: false },
+        { text: "はい", value: 1 },
+        { text: "いいえ", value: 0 },
     ];
 
     const setQuestionnaireData = (): SaveQuestionnairePost => {
         return {
             user_id: Number(localStorage.getItem("user_id")),
             answer_result_section_id: store.getState().ansResultSectionIDState,
-            concentration: concentration,
-            while_doing: whileDoing,
-            cheating: cheating,
-            nonsense: nonsense,
+            concentration: Number(concentration),
+            while_doing: Number(whileDoing),
+            cheating: Number(cheating),
+            nonsense: Number(nonsense),
         };
     };
 

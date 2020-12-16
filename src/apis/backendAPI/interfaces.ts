@@ -32,9 +32,9 @@ export interface SaveQuestionnairePost {
     user_id: number;
     answer_result_section_id: number;
     concentration: number;
-    while_doing: boolean;
-    cheating: boolean;
-    nonsense: boolean;
+    while_doing: number;
+    cheating: number;
+    nonsense: number;
 }
 
 export interface InitMaxFrequency{
