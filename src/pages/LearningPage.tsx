@@ -35,7 +35,6 @@ function LearningPage() {
     const selector = useSelector((state) => state);
     const [startCheck, setStartCheck] = useState(false);
     const [startTime, setStartTime] = useState("");
-    const [windowNonFocusTimer, setNonFocusTimer] = useState(0);
     const [questionID, setQuestionID] = useState(0);
     const [next, setNext] = useState(false);
     const [method, setMethod] = useState(0);
@@ -50,38 +49,12 @@ function LearningPage() {
     const [finishFlag, setFinishFlag] = useState(false);
     const [qCount, setQCount] = useState(0);
     const [blobData, setBlobData] = useState<Blob | null>(null);
-    const refWindowNonFocusTimer = useRef(windowNonFocusTimer);
-    // const [webSocketData, setWebSocketData] = useState<BtoFtoC | null>(null);
-    // const [webSocketDataSub, setWebSocketDataSub] = useState<SonConc | null>(
-    //     null
-    // );
-    const [blink, setBlink] = useState([]);
-    const [angle, setAngle] = useState([]);
     const [imagePath, setImagePath] = useState("");
-    const [faceMove, setFaceMove] = useState([]);
-    const [c1, setC1] = useState([]);
-    const [c2, setC2] = useState([]);
-    const [c3, setC3] = useState([]);
-    const [w, setW] = useState([]);
-    const [sonConc, setSonConc] = useState([]);
+    const [concData, setConcData] = useState([]);
     const [cameraStart, setCameraStart] = useState(false);
 
     useEffect(() => {
-        refWindowNonFocusTimer.current = windowNonFocusTimer;
-    }, [windowNonFocusTimer]);
-
-    useEffect(() => {
-        let windowNonFocusTimerFlag: any;
         setStartTime(getNowTimeString());
-
-        window.addEventListener("focus", () => {
-            clearInterval(windowNonFocusTimerFlag);
-        });
-        window.addEventListener("blur", () => {
-            windowNonFocusTimerFlag = setInterval(() => {
-                setNonFocusTimer(refWindowNonFocusTimer.current + 1);
-            }, 1000);
-        });
     }, []);
 
     useEffect(() => {
@@ -98,6 +71,7 @@ function LearningPage() {
             const cnt = qCount + 1;
             setQuestionID(store.getState().questionIDsState[cnt]);
             setQCount(qCount + 1);
+            setConcData([]);
             setNext(false);
         }
     }, [next]);
@@ -152,35 +126,13 @@ function LearningPage() {
         }
     }, [selector]);
 
-    // useEffect(() => {
-    //     setConcViewState(webSocketData);
-    // }, [webSocketData]);
-    // useEffect(() => {
-    //     setConcViewState(webSocketDataSub);
-    // }, [webSocketDataSub]);
-
     // e.dataはストリング
-    const webSocketDataAdd1 = (e: any) => {
+    const webSocketDataAdd = (e: any) => {
         const jsonData = JSON.parse(e.data);
         console.log(jsonData);
-        if (method1 == true) {
-            setBlink((blink) => blink.concat(jsonData["blink"]));
-            setAngle((angle) => angle.concat(jsonData["angle"]));
-            setW((w) => w.concat(jsonData["w"]));
-            setFaceMove((faceMove) => faceMove.concat(jsonData["face_move"]));
-            setImagePath(jsonData["face_image_path"]);
-            setC1((c1) => c1.concat(jsonData["c1"]));
-            setC2((c2) => c2.concat(jsonData["c2"]));
-            setC3((c3) => c3.concat(jsonData["c3"]));
-        }
-    };
-    const webSocketDataAdd2 = (e: any) => {
-        const jsonData = JSON.parse(e.data);
-        console.log(jsonData);
-        if (method2 == true) {
-            setImagePath(jsonData["face_image_path"]);
-            setSonConc((sonConc) => sonConc.concat(jsonData["concentration"]));
-        }
+
+        setConcData((concData) => concData.concat(jsonData));
+        setImagePath(jsonData["face_image_path"]);
     };
 
     const sendData = () => {};
@@ -190,20 +142,8 @@ function LearningPage() {
             user_id: Number(localStorage.getItem("user_id")),
             answer_result_ids: store.getState().ansResultIDsState,
             correct_answer_number: store.getState().correctNumberState,
-            other_focus_second: windowNonFocusTimer,
             start_time: startTime,
             end_time: getNowTimeString(),
-            c1: c1,
-            c2: c2,
-            c3: c3,
-            concentration: sonConc,
-            face_image_path: imagePath,
-            blink: blink,
-            face_move: faceMove,
-            angle: angle,
-            w: w,
-            method1: method1,
-            method2: method2,
         };
     };
     const changeMethod = (e: any) => {
@@ -217,8 +157,6 @@ function LearningPage() {
         if (e.target.name == "camera") {
             setCameraMethod(e.target.checked);
         }
-        // setMethod(e.currentTarget.value);
-        // setStartCheck(true);
     };
     const startCheckButton = (e: any) => {
         console.log(e.currentTarget.value);
@@ -282,12 +220,13 @@ function LearningPage() {
                     <div>
                         <QuestionViewComponent
                             questionID={questionID}
+                            concentrationData={concData}
                             setNext={setNext}
                         ></QuestionViewComponent>
-                        <ConcentrationViewComponent
+                        {/* <ConcentrationViewComponent
                             concData1={c3}
                             concData2={sonConc}
-                        ></ConcentrationViewComponent>
+                        ></ConcentrationViewComponent> */}
                     </div>
                 )
             ) : finish ? (
@@ -305,8 +244,7 @@ function LearningPage() {
                 start={cameraStart}
                 stop={cameraStop}
                 setBlobData={setBlobData}
-                setWebSocketData1={webSocketDataAdd1}
-                setWebSocketData2={webSocketDataAdd2}
+                setWebSocketData={webSocketDataAdd}
                 method1={method1}
                 method2={method2}
                 sendData={sendData}

@@ -19,7 +19,8 @@ import AnsImgComponent from "./AnsImgComponent";
 const QuestionViewComponent: React.FC<{
     questionID: number;
     setNext: any;
-}> = ({ questionID, setNext }) => {
+    concentrationData: any[];
+}> = ({ questionID, setNext, concentrationData }) => {
     const dispatch = useDispatch();
     const [questionText, setQuestionText] = useState("");
     const [questionImg, setQuestionImg] = useState([]);
@@ -110,10 +111,12 @@ const QuestionViewComponent: React.FC<{
             memo_log: log,
             other_focus_second: windowNonFocusTimer,
             user_answer: answerFinal,
+            concentration_data: concentrationData,
             start_time: startTime,
             end_time: end,
         };
     };
+
     const reset = () => {
         setAnswerResult("");
         setNext(true);

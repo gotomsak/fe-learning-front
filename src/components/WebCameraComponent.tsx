@@ -11,8 +11,7 @@ const WebCameraComponent: React.FC<{
     start: boolean;
     stop: boolean;
     setBlobData: any;
-    setWebSocketData1: any;
-    setWebSocketData2: any;
+    setWebSocketData: any;
     method1: boolean;
     method2: boolean;
     sendData?: any;
@@ -20,8 +19,7 @@ const WebCameraComponent: React.FC<{
     start,
     stop,
     setBlobData,
-    setWebSocketData1,
-    setWebSocketData2,
+    setWebSocketData,
     method1,
     method2,
     sendData,
@@ -112,7 +110,7 @@ const WebCameraComponent: React.FC<{
     const webSocketInit1 = () => {
         webSocket1!.onmessage = (event) => {
             console.log(event.data);
-            setWebSocketData1(event);
+            setWebSocketData(event);
         };
         webSocket1!.onclose = (event) => {
             console.log("simeta");
@@ -126,7 +124,7 @@ const WebCameraComponent: React.FC<{
     const webSocketInit2 = () => {
         webSocket2!.onmessage = (event) => {
             console.log(event.data);
-            setWebSocketData2(event);
+            setWebSocketData(event);
         };
         webSocket2!.onclose = (event) => {
             console.log("simeta");
