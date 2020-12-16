@@ -12,9 +12,9 @@ import { send } from "process";
 
 function QuestionnairePage() {
     const [concentration, setConcentration] = useState(0);
-    const [whileDoing, setWhileDoing] = useState("");
-    const [cheating, setCheating] = useState("");
-    const [nonsense, setNonsense] = useState("");
+    const [whileDoing, setWhileDoing] = useState(false);
+    const [cheating, setCheating] = useState(false);
+    const [nonsense, setNonsense] = useState(false);
     const history = useHistory();
 
     const rangeConcentrationRadio = range(1, 10);
@@ -27,8 +27,8 @@ function QuestionnairePage() {
     });
 
     const boolRadio: any = [
-        { text: "はい", value: "true" },
-        { text: "いいえ", value: "false" },
+        { text: "はい", value: true },
+        { text: "いいえ", value: false },
     ];
 
     const setQuestionnaireData = (): SaveQuestionnairePost => {
