@@ -158,8 +158,8 @@ function FrequencyPage() {
                 start={startCheck}
                 stop={finishCheck}
                 setBlobData={setBlobData}
-                setWebSocketData1={webSocketDataAdd}
-                setWebSocketData2={null}
+                setWebSocketData={webSocketDataAdd}
+                // setWebSocketData2={null}
                 method1={false}
                 method2={false}
                 sendData={webSocketSendData}

@@ -15,6 +15,7 @@ export interface CheckAnswerPost {
     other_focus_second: number;
     user_answer: string;
     memo_log: string;
+    concentration_data: any[];
     start_time: string;
     end_time: string;
 }
@@ -23,20 +24,6 @@ export interface CheckAnswerSectionPost {
     user_id: number;
     answer_result_ids: number[];
     correct_answer_number: number;
-    other_focus_second: number;
-    // face_video?: Blob;
-    // face_image_path?: string;
-    face_image_path?: string;
-    concentration?: any[];
-    blink?: number[];
-    face_move?: number[];
-    angle?: any[];
-    c1?: number[];
-    c2?: number[];
-    c3?: number[];
-    w?: number[];
-    method1?: boolean;
-    method2?: boolean;
     start_time: string;
     end_time: string;
 }
