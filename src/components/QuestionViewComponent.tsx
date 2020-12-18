@@ -120,6 +120,8 @@ const QuestionViewComponent: React.FC<{
     const reset = () => {
         setAnswerResult("");
         setNext(true);
+        setLog("");
+        window.scrollTo(0, 0);
     };
 
     const changeAnsType = () => {
