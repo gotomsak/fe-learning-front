@@ -102,9 +102,9 @@ function FrequencyPage() {
     };
 
     const recordSelect = (e: any) => {
-        if (e.currentTarget.value == "max") setStartCheck(true);
+        if (e.currentTarget.value === "max") setStartCheck(true);
         setMaxRecord(true);
-        if (e.currentTarget.value == "min") setStartCheck(true);
+        if (e.currentTarget.value === "min") setStartCheck(true);
         setMinRecord(true);
     };
     const webSocketSendData = () => {
