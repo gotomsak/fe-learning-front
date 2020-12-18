@@ -148,19 +148,19 @@ function LearningPage() {
     };
     const changeMethod = (e: any) => {
         console.log(e.target.checked);
-        if (e.target.name === "method1") {
+        if (e.target.name == "method1") {
             setMethod1(e.target.checked);
         }
-        if (e.target.name === "method2") {
+        if (e.target.name == "method2") {
             setMethod2(e.target.checked);
         }
-        if (e.target.name === "camera") {
+        if (e.target.name == "camera") {
             setCameraMethod(e.target.checked);
         }
     };
     const startCheckButton = (e: any) => {
         console.log(e.currentTarget.value);
-        if (e.currentTarget.value === 1) {
+        if (e.currentTarget.value == 1) {
             if (cameraMethod === true) {
                 setCameraStart(true);
             }

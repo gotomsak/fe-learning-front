@@ -15,7 +15,7 @@ const MaxFrequencyComponent: React.FC<{
 
     useEffect(() => {
         refWindowTimer.current = windowTimer;
-        if (windowTimer === 60) {
+        if (windowTimer == 60) {
             clearInterval(windowTimeFlag!);
             setFinishCheck(true);
         }

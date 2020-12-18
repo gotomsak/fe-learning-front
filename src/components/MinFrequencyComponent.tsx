@@ -15,7 +15,7 @@ const MinFrequencyComponent: React.FC<{ setFinishCheck: any }> = ({
 
     useEffect(() => {
         refWindowTimer.current = windowTimer;
-        if (windowTimer === 60) {
+        if (windowTimer == 60) {
             clearInterval(windowTimeFlag!);
             setFinishCheck(true);
         }

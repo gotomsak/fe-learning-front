@@ -52,7 +52,7 @@ const WebCameraComponent: React.FC<{
     useEffect(() => {
         console.log("check");
         console.log(videoRef);
-        if (check === 1) {
+        if (check == 1) {
             webCameraInit().then((stream) => {
                 video!.srcObject = stream!;
                 setStreamState(stream!);
@@ -79,17 +79,17 @@ const WebCameraComponent: React.FC<{
         // { blob: getCanvasData(), data: sendData }.toString()
         if (start === true) {
             recorder!.start(200);
-            if (method1 === true) {
+            if (method1 == true) {
                 webSocketInit1();
             }
-            if (method2 === true) {
+            if (method2 == true) {
                 webSocketInit2();
             }
             setInterval(() => {
-                if (method1 === true) {
+                if (method1 == true) {
                     webSocket1!.send(getCanvasData());
                 }
-                if (method2 === true) {
+                if (method2 == true) {
                     webSocket2!.send(getCanvasData());
                 }
             }, 500);
