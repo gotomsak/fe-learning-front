@@ -9,6 +9,7 @@ import SigninPage from "./pages/SigninPage";
 import QuestionnairePage from "./pages/QuestionnairePage";
 import FrequencyPage from "./pages/FrequencyPage";
 import ManualPage from "./pages/ManualPage";
+import GymPage from "./pages/GymPage";
 const App = () => {
     return (
         <div className="App">
@@ -20,6 +21,7 @@ const App = () => {
                         path="/questionnaire"
                         component={QuestionnairePage}
                     />
+                    <Route path="/gym" component={GymPage} />
                     <Route path="/frequency" component={FrequencyPage} />
                     <Route path="/manual" component={ManualPage} />
                     <Route path="/signup" component={SignupPage} />
