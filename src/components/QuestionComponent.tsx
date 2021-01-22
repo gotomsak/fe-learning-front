@@ -3,7 +3,7 @@ import "./QuestionComponent.css";
 
 const QuestionComponent: React.FC<{
     questionText: string | null;
-    questionImg: string[] | null;
+    questionImg?: string[] | null;
 }> = ({ questionText, questionImg }) => {
     return (
         <div className="QuestionContainer">

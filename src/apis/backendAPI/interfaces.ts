@@ -70,3 +70,7 @@ export interface SonConc {
     face_image_path: string;
     concentration: any[];
 }
+
+export interface GetQuestionGymPost{
+    now_level: number;
+}

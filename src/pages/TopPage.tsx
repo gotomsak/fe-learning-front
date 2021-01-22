@@ -32,6 +32,9 @@ function TopPage() {
                 setErrorMessage(err.data);
             });
     };
+    const StartGym = () => {
+        history.push("/gym");
+    };
     const StartLearning = () => {
         history.push("/learning");
     };
@@ -54,6 +57,10 @@ function TopPage() {
                 <MenuBtnComponent
                     btnText="頻度初期化"
                     event={Frequency}
+                ></MenuBtnComponent>
+                <MenuBtnComponent
+                    btnText="頭の体操"
+                    event={StartGym}
                 ></MenuBtnComponent>
                 <MenuBtnComponent
                     btnText="使い方"
